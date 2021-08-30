@@ -48,7 +48,7 @@ extension KeystoreBuilder: KeystoreBuilding {
         let unsafeRawBufferPointer_password = passworld.withUnsafeBytes { $0 }
         let unsafeBufferPointer_password = unsafeRawBufferPointer_password.bindMemory(to: UInt8.self)
        
-        let unsafeRawBufferPointer_salt = passworld.withUnsafeBytes { $0 }
+        let unsafeRawBufferPointer_salt = salt.withUnsafeBytes { $0 }
         let unsafeBufferPointer_salt = unsafeRawBufferPointer_salt.bindMemory(to: UInt8.self)
        
         
