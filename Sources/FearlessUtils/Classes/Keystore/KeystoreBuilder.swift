@@ -44,7 +44,15 @@ extension KeystoreBuilder: KeystoreBuilding {
         let passworld = [UInt8](scryptData)
         let salt = [UInt8](scryptParameters.salt)
         var encryptionKey:[UInt8] = []
-        crypto_scrypt(passworld, passworld.count, salt, salt.count, UInt64(UInt(scryptParameters.scryptN)), UInt32(UInt(scryptParameters.scryptP)), UInt32(UInt(scryptParameters.scryptR)), &encryptionKey, Int(UInt(KeystoreConstants.encryptionKeyLength)))
+        
+        let unsafeRawBufferPointer_password = passworld.withUnsafeBytes { $0 }
+        let unsafeBufferPointer_password = unsafeRawBufferPointer_password.bindMemory(to: UInt8.self)
+       
+        let unsafeRawBufferPointer_salt = passworld.withUnsafeBytes { $0 }
+        let unsafeBufferPointer_salt = unsafeRawBufferPointer_salt.bindMemory(to: UInt8.self)
+       
+        
+        crypto_scrypt(unsafeBufferPointer_password.baseAddress, passworld.count, unsafeBufferPointer_salt.baseAddress, salt.count, UInt64(UInt(scryptParameters.scryptN)), UInt32(UInt(scryptParameters.scryptP)), UInt32(UInt(scryptParameters.scryptR)), &encryptionKey, Int(UInt(KeystoreConstants.encryptionKeyLength)))
         
         let nonce = try Data.gerateRandomBytes(of: KeystoreConstants.nonceLength)
 

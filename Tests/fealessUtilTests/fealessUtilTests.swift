@@ -1,5 +1,5 @@
 import XCTest
-@testable import fealessUtil
+@testable import FearlessUtils
 
 final class fealessUtilTests: XCTestCase {
     func testExample() {
