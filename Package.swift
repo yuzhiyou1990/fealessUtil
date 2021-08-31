@@ -15,7 +15,7 @@ let package = Package(
         .package(name: "BigInt", url: "https://github.com/attaswift/BigInt.git", from: "5.2.1"),
         .package(name: "TweetNacl", url: "https://github.com/bitmark-inc/tweetnacl-swiftwrap", from: "1.0.2"),
         .package(name: "xxHash-Swift", url: "https://github.com/daisuke-t-jp/xxHash-Swift", from: "1.1.0"),
-        .package(name: "SS58Factory", url: "https://github.com/lishuailibertine/SS58Factory", from: "0.0.8"),
+        .package(name: "SS58Factory", url: "https://github.com/lishuailibertine/SS58Factory", from: "0.1.2"),
         .package(name: "scrypt", url: "https://github.com/v57/scrypt.c", from: "0.1.1")
     ],
     targets: [
@@ -24,8 +24,5 @@ let package = Package(
         .target(
             name: "FearlessUtils",
             dependencies: ["BigInt","TweetNacl","xxHash-Swift","SS58Factory","scrypt"]),
-        .testTarget(
-            name: "fealessUtilTests",
-            dependencies: ["FearlessUtils"]),
     ]
 )

@@ -1,5 +1,6 @@
 import Foundation
-import scrypt
+import SS58Factory
+import Scrypt
 import TweetNacl
 
 public class KeystoreBuilder {
@@ -41,18 +42,13 @@ extension KeystoreBuilder: KeystoreBuilding {
             scryptData = Data()
         }
         
-        let passworld = [UInt8](scryptData)
-        let salt = [UInt8](scryptParameters.salt)
-        var encryptionKey:[UInt8] = []
-        
-        let unsafeRawBufferPointer_password = passworld.withUnsafeBytes { $0 }
-        let unsafeBufferPointer_password = unsafeRawBufferPointer_password.bindMemory(to: UInt8.self)
-       
-        let unsafeRawBufferPointer_salt = salt.withUnsafeBytes { $0 }
-        let unsafeBufferPointer_salt = unsafeRawBufferPointer_salt.bindMemory(to: UInt8.self)
-       
-        
-        crypto_scrypt(unsafeBufferPointer_password.baseAddress, passworld.count, unsafeBufferPointer_salt.baseAddress, salt.count, UInt64(UInt(scryptParameters.scryptN)), UInt32(UInt(scryptParameters.scryptP)), UInt32(UInt(scryptParameters.scryptR)), &encryptionKey, Int(UInt(KeystoreConstants.encryptionKeyLength)))
+        let encryptionKey = try IRScryptKeyDeriviation()
+            .deriveKey(from: scryptData,
+                       salt: scryptParameters.salt,
+                       scryptN: UInt(scryptParameters.scryptN),
+                       scryptP: UInt(scryptParameters.scryptP),
+                       scryptR: UInt(scryptParameters.scryptR),
+                       length: UInt(KeystoreConstants.encryptionKeyLength))
         
         let nonce = try Data.gerateRandomBytes(of: KeystoreConstants.nonceLength)
 
@@ -60,7 +56,7 @@ extension KeystoreBuilder: KeystoreBuilding {
 
         let pcksData = KeystoreConstants.pkcs8Header + secretKeyData +
             KeystoreConstants.pkcs8Divider + data.publicKeyData
-        let encrypted = try NaclSecretBox.secretBox(message: pcksData, nonce: nonce, key: Data(encryptionKey))
+        let encrypted = try NaclSecretBox.secretBox(message: pcksData, nonce: nonce, key: encryptionKey)
         let encoded = scryptParameters.encode() + nonce + encrypted
 
         let encodingType = [KeystoreEncodingType.scrypt.rawValue, KeystoreEncodingType.xsalsa.rawValue]
