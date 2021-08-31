@@ -1,6 +1,6 @@
 import Foundation
 import TweetNacl
-import Scrypt
+import SubstrateScrypt
 
 public class KeystoreExtractor: KeystoreExtracting {
     public init() {}

@@ -1,6 +1,6 @@
 import Foundation
 import SS58Factory
-import Scrypt
+import SubstrateScrypt
 import TweetNacl
 
 public class KeystoreBuilder {
