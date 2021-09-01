@@ -39,11 +39,11 @@
       },
       {
         "package": "TweetNacl",
-        "repositoryURL": "https://github.com/bitmark-inc/tweetnacl-swiftwrap",
+        "repositoryURL": "https://github.com/lishuailibertine/tweetnacl-swiftwrap",
         "state": {
-          "branch": null,
-          "revision": "d1552db4d907f2c5cb3d1bf1336496b2e16c8ecf",
-          "version": "1.0.2"
+          "branch": "master",
+          "revision": "2dc538b4f76ab5db14f25f146d8d7e640a8a6bbc",
+          "version": null
         }
       },
       {
