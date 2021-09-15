@@ -45,7 +45,6 @@ struct JsonContainer: Codable {
 public extension Encodable {
     func toScaleCompatibleJSON() throws -> JSON {
         let container = EncodingContainer(value: self)
-        print("\(self)")
         let data = try JSONEncoder.scaleCompatible().encode(container)
         let json = try JSONDecoder.scaleCompatible().decode(JsonContainer.self, from: data).value
 
