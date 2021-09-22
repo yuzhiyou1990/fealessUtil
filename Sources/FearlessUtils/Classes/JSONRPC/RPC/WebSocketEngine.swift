@@ -186,7 +186,7 @@ public final class WebSocketEngine {
 
 // MARK: Internal
 
-public extension WebSocketEngine {
+extension WebSocketEngine {
     public  func changeState(_ newState: State) {
         state = newState
     }

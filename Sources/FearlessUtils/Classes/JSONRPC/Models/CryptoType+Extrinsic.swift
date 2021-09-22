@@ -8,7 +8,7 @@
 import Foundation
 
 public extension CryptoType {
-    public init?(version: UInt8) {
+    init?(version: UInt8) {
         switch version {
         case 0:
             self = .ed25519
@@ -21,7 +21,7 @@ public extension CryptoType {
         }
     }
 
-    public var version: UInt8 {
+    var version: UInt8 {
         switch self {
         case .sr25519:
             return 1
@@ -32,7 +32,7 @@ public extension CryptoType {
         }
     }
 
-    public  var signatureLength: Int {
+    var signatureLength: Int {
         switch self {
         case .sr25519:
             return 64

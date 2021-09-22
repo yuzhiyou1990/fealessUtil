@@ -114,7 +114,7 @@ public protocol JSONRPCEngine: AnyObject {
 }
 
 public extension JSONRPCEngine {
-    public func callMethod<P: Encodable, T: Decodable>(
+    func callMethod<P: Encodable, T: Decodable>(
         _ method: String,
         params: P?,
         completion closure: ((Result<T, Error>) -> Void)?

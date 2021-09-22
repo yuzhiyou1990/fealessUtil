@@ -153,4 +153,14 @@ public struct ExtrinsicPayload: ScaleEncodable {
         scaleEncoder.appendRaw(data: genesisHash)
         scaleEncoder.appendRaw(data: blockHash)
     }
+    public init(call:Call,era:Era,nonce:UInt32,tip:BigUInt,specVersion:UInt32,transactionVersion:UInt32,genesisHash:Data,blockHash:Data){
+        self.call = call
+        self.era = era
+        self.nonce = nonce
+        self.tip = tip
+        self.specVersion = specVersion
+        self.transactionVersion = transactionVersion
+        self.genesisHash = genesisHash
+        self.blockHash = blockHash
+    }
 }

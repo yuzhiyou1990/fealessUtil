@@ -8,7 +8,7 @@ public final class ChainStorageIdFactory: ChainStorageIdFactoryProtocol {
     public  let genesisData: Data
 
     public init(chain: SubstrateChain) throws {
-        genesisData = try Data(hexString: chain.genesisHash)
+        genesisData = try Data(hexString: chain.genesisHash ?? "")
     }
 
     public  func createIdentifier(for key: Data) -> String {

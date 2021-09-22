@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension StorageKeyFactoryProtocol {
+extension StorageKeyFactoryProtocol {
     public func updatedDualRefCount() throws -> Data {
         try createStorageKey(
             moduleName: "System",

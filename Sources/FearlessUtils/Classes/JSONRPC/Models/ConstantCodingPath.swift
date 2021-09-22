@@ -5,7 +5,7 @@ public struct ConstantCodingPath {
     public  let constantName: String
 }
 
-public extension ConstantCodingPath {
+extension ConstantCodingPath {
     public static var slashDeferDuration: ConstantCodingPath {
         ConstantCodingPath(moduleName: "Staking", constantName: "SlashDeferDuration")
     }

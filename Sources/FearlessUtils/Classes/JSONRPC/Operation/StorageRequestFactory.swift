@@ -312,7 +312,7 @@ public final class StorageRequestFactory: StorageRequestFactoryProtocol {
 }
 
 public extension StorageRequestFactoryProtocol {
-    public  func queryItems<K, T>(
+    func queryItems<K, T>(
         engine: JSONRPCEngine,
         keyParams: @escaping () throws -> [K],
         factory: @escaping () throws -> RuntimeCoderFactoryProtocol,
@@ -327,7 +327,7 @@ public extension StorageRequestFactoryProtocol {
         )
     }
 
-    public func queryItems<K1, K2, T>(
+    func queryItems<K1, K2, T>(
         engine: JSONRPCEngine,
         keyParams1: @escaping () throws -> [K1],
         keyParams2: @escaping () throws -> [K2],
@@ -344,7 +344,7 @@ public extension StorageRequestFactoryProtocol {
         )
     }
 
-    public  func queryItems<T>(
+    func queryItems<T>(
         engine: JSONRPCEngine,
         keys: @escaping () throws -> [Data],
         factory: @escaping () throws -> RuntimeCoderFactoryProtocol,
@@ -359,7 +359,7 @@ public extension StorageRequestFactoryProtocol {
         )
     }
 
-    public func queryChildItem<T>(
+    func queryChildItem<T>(
         engine: JSONRPCEngine,
         storageKeyParam: @escaping () throws -> Data,
         childKeyParam: @escaping () throws -> Data,

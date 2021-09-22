@@ -19,6 +19,16 @@ public struct SubstrateExtrinsicParameters {
     public  let moduleIndex: UInt8
     public  let callIndex: UInt8
     public  let tip: BigUInt?
+    public init(nonce: UInt32,genesisHash: Data,specVersion: UInt32,transactionVersion: UInt32,signatureVersion: UInt8,moduleIndex: UInt8,callIndex: UInt8,tip: BigUInt?){
+        self.nonce = nonce
+        self.genesisHash = genesisHash
+        self.specVersion = specVersion
+        self.transactionVersion = transactionVersion
+        self.signatureVersion = signatureVersion
+        self.moduleIndex = moduleIndex
+        self.callIndex = callIndex
+        self.tip = tip
+    }
 }
 
 public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {

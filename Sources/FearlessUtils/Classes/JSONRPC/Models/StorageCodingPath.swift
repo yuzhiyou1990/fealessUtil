@@ -12,7 +12,7 @@ public struct StorageCodingPath: Equatable {
     public  let itemName: String
 }
 
-public extension StorageCodingPath {
+extension StorageCodingPath {
     public  static var account: StorageCodingPath {
         StorageCodingPath(moduleName: "System", itemName: "Account")
     }
