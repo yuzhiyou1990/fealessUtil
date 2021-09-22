@@ -2,13 +2,13 @@ import Foundation
 
 import RobinHood
 
-enum StorageKeyEncodingOperationError: Error {
+public enum StorageKeyEncodingOperationError: Error {
     case missingRequiredParams
     case incompatibleStorageType
     case invalidStoragePath
 }
 
-class MapKeyEncodingOperation<T: Encodable>: BaseOperation<[Data]> {
+public class MapKeyEncodingOperation<T: Encodable>: BaseOperation<[Data]> {
     var keyParams: [T]?
     var codingFactory: RuntimeCoderFactoryProtocol?
 
@@ -83,7 +83,7 @@ class MapKeyEncodingOperation<T: Encodable>: BaseOperation<[Data]> {
     }
 }
 
-class DoubleMapKeyEncodingOperation<T1: Encodable, T2: Encodable>: BaseOperation<[Data]> {
+public class DoubleMapKeyEncodingOperation<T1: Encodable, T2: Encodable>: BaseOperation<[Data]> {
     var keyParams1: [T1]?
     var keyParams2: [T2]?
     var codingFactory: RuntimeCoderFactoryProtocol?
@@ -176,13 +176,13 @@ class DoubleMapKeyEncodingOperation<T1: Encodable, T2: Encodable>: BaseOperation
     }
 }
 
-extension MapKeyEncodingOperation {
+public extension MapKeyEncodingOperation {
     func localWrapper(for factory: ChainStorageIdFactoryProtocol) -> CompoundOperationWrapper<[String]> {
         baseLocalWrapper(for: factory)
     }
 }
 
-extension DoubleMapKeyEncodingOperation {
+public extension DoubleMapKeyEncodingOperation {
     func localWrapper(for factory: ChainStorageIdFactoryProtocol) -> CompoundOperationWrapper<[String]> {
         baseLocalWrapper(for: factory)
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RPCMethod {
+public enum RPCMethod {
     static let storageSubscibe = "state_subscribeStorage"
     static let chain = "system_chain"
     static let getStorage = "state_getStorage"

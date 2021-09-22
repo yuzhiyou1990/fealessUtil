@@ -2,20 +2,20 @@ import Foundation
 import RobinHood
 
 
-struct StorageResponse<T: Decodable> {
+public struct StorageResponse<T: Decodable> {
     let key: Data
     let data: Data?
     let value: T?
 }
 
-struct ChildStorageResponse<T: Decodable> {
+public struct ChildStorageResponse<T: Decodable> {
     let storageKey: Data
     let childKey: Data
     let data: Data?
     let value: T?
 }
 
-protocol StorageRequestFactoryProtocol {
+public protocol StorageRequestFactoryProtocol {
     func queryItems<K, T>(
         engine: JSONRPCEngine,
         keyParams: @escaping () throws -> [K],
@@ -54,7 +54,7 @@ protocol StorageRequestFactoryProtocol {
     ) -> CompoundOperationWrapper<ChildStorageResponse<T>> where T: Decodable
 }
 
-final class StorageRequestFactory: StorageRequestFactoryProtocol {
+public final class StorageRequestFactory: StorageRequestFactoryProtocol {
     let remoteFactory: StorageKeyFactoryProtocol
     let operationManager: OperationManagerProtocol
 
@@ -311,7 +311,7 @@ final class StorageRequestFactory: StorageRequestFactoryProtocol {
     }
 }
 
-extension StorageRequestFactoryProtocol {
+public extension StorageRequestFactoryProtocol {
     func queryItems<K, T>(
         engine: JSONRPCEngine,
         keyParams: @escaping () throws -> [K],

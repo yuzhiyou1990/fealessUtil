@@ -1,7 +1,7 @@
 import Foundation
 import RobinHood
 
-extension CompoundOperationWrapper {
+public extension CompoundOperationWrapper {
     func addDependency(operations: [Operation]) {
         allOperations.forEach { nextOperation in
             operations.forEach { prevOperation in

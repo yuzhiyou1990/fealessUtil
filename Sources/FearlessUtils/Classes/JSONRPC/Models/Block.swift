@@ -1,11 +1,11 @@
 import Foundation
 
-struct SignedBlock: Decodable {
+public struct SignedBlock: Decodable {
     let block: Block
     let justification: Data?
 }
 
-struct Block: Decodable {
+public struct Block: Decodable {
     struct Digest: Decodable {
         let logs: [String]
     }

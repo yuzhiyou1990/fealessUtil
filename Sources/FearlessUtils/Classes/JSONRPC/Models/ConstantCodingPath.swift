@@ -1,11 +1,11 @@
 import Foundation
 
-struct ConstantCodingPath {
+public struct ConstantCodingPath {
     let moduleName: String
     let constantName: String
 }
 
-extension ConstantCodingPath {
+public extension ConstantCodingPath {
     static var slashDeferDuration: ConstantCodingPath {
         ConstantCodingPath(moduleName: "Staking", constantName: "SlashDeferDuration")
     }

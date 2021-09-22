@@ -1,10 +1,10 @@
 import Foundation
 
-protocol ReconnectionStrategyProtocol {
+public protocol ReconnectionStrategyProtocol {
     func reconnectAfter(attempt: Int) -> TimeInterval?
 }
 
-struct ExponentialReconnection: ReconnectionStrategyProtocol {
+public struct ExponentialReconnection: ReconnectionStrategyProtocol {
     let multiplier: Double
 
     init(multiplier: Double = 0.3) {

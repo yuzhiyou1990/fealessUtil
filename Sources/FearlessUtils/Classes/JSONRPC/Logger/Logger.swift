@@ -1,7 +1,7 @@
 import Foundation
 import SwiftyBeaver
 
-protocol LoggerProtocol {
+public protocol LoggerProtocol {
     func verbose(message: String, file: String, function: String, line: Int)
     func debug(message: String, file: String, function: String, line: Int)
     func info(message: String, file: String, function: String, line: Int)
@@ -9,7 +9,7 @@ protocol LoggerProtocol {
     func error(message: String, file: String, function: String, line: Int)
 }
 
-extension LoggerProtocol {
+public extension LoggerProtocol {
     func verbose(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
         verbose(message: message, file: file, function: function, line: line)
     }
@@ -31,7 +31,7 @@ extension LoggerProtocol {
     }
 }
 
-final class Logger {
+public final class Logger {
     static let shared = Logger()
 
     let log = SwiftyBeaver.self
@@ -65,7 +65,7 @@ final class Logger {
     }
 }
 
-extension Logger: LoggerProtocol {
+public extension Logger: LoggerProtocol {
     func verbose(message: String, file: String, function: String, line: Int) {
         log.custom(
             level: .verbose,

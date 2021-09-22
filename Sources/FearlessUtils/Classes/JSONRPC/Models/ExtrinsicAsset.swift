@@ -1,22 +1,22 @@
 import Foundation
 import BigInt
 
-struct ExtrinsicAssetConstants {
+public struct ExtrinsicAssetConstants {
     static let signedExtrinsicInitialVersion: UInt8 = 128
     static let accountIdLength: UInt8 = 32
 }
 
-struct Call {
+public struct Call {
     let moduleIndex: UInt8
     let callIndex: UInt8
     let arguments: Data?
 }
 
-enum ExtrinsicCodingError: Error {
+public enum ExtrinsicCodingError: Error {
     case unsupportedSignatureVersion
 }
 
-struct ExtrinsicAsset: ScaleCodable {
+public struct ExtrinsicAsset: ScaleCodable {
     let version: UInt8
     let transaction: ExtrinsicTransaction?
     let call: Call
@@ -77,7 +77,7 @@ struct ExtrinsicAsset: ScaleCodable {
     }
 }
 
-struct ExtrinsicTransaction: ScaleCodable {
+public struct ExtrinsicTransaction: ScaleCodable {
     let accountId: Data
     let signatureVersion: UInt8
     let signature: Data
@@ -128,7 +128,7 @@ struct ExtrinsicTransaction: ScaleCodable {
     }
 }
 
-struct ExtrinsicPayload: ScaleEncodable {
+public struct ExtrinsicPayload: ScaleEncodable {
     let call: Call
     let era: Era
     let nonce: UInt32

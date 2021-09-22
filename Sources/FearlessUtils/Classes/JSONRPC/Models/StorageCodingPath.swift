@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct StorageCodingPath: Equatable {
+public struct StorageCodingPath: Equatable {
     let moduleName: String
     let itemName: String
 }
 
-extension StorageCodingPath {
+public extension StorageCodingPath {
     static var account: StorageCodingPath {
         StorageCodingPath(moduleName: "System", itemName: "Account")
     }

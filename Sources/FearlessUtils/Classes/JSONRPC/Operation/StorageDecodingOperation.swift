@@ -2,16 +2,16 @@ import Foundation
 
 import RobinHood
 
-enum StorageDecodingOperationError: Error {
+public enum StorageDecodingOperationError: Error {
     case missingRequiredParams
     case invalidStoragePath
 }
 
-protocol StorageDecodable {
+public protocol StorageDecodable {
     func decode(data: Data, path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON
 }
 
-extension StorageDecodable {
+public extension StorageDecodable {
     func decode(data: Data, path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON {
         guard let entry = codingFactory.metadata.getStorageMetadata(
             in: path.moduleName,
@@ -25,11 +25,11 @@ extension StorageDecodable {
     }
 }
 
-protocol StorageModifierHandling {
+public protocol StorageModifierHandling {
     func handleModifier(at path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON?
 }
 
-extension StorageModifierHandling {
+public extension StorageModifierHandling {
     func handleModifier(at path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON? {
         guard let entry = codingFactory.metadata.getStorageMetadata(
             in: path.moduleName,
@@ -48,7 +48,7 @@ extension StorageModifierHandling {
     }
 }
 
-final class StorageDecodingOperation<T: Decodable>: BaseOperation<T>, StorageDecodable {
+public final class StorageDecodingOperation<T: Decodable>: BaseOperation<T>, StorageDecodable {
     var data: Data?
     var codingFactory: RuntimeCoderFactoryProtocol?
 
@@ -85,7 +85,7 @@ final class StorageDecodingOperation<T: Decodable>: BaseOperation<T>, StorageDec
     }
 }
 
-final class StorageFallbackDecodingOperation<T: Decodable>: BaseOperation<T?>,
+public final class StorageFallbackDecodingOperation<T: Decodable>: BaseOperation<T?>,
     StorageDecodable, StorageModifierHandling {
     var data: Data?
     var codingFactory: RuntimeCoderFactoryProtocol?
@@ -129,7 +129,7 @@ final class StorageFallbackDecodingOperation<T: Decodable>: BaseOperation<T?>,
     }
 }
 
-final class StorageDecodingListOperation<T: Decodable>: BaseOperation<[T]>, StorageDecodable {
+public final class StorageDecodingListOperation<T: Decodable>: BaseOperation<[T]>, StorageDecodable {
     var dataList: [Data]?
     var codingFactory: RuntimeCoderFactoryProtocol?
 
@@ -169,7 +169,7 @@ final class StorageDecodingListOperation<T: Decodable>: BaseOperation<[T]>, Stor
     }
 }
 
-final class StorageFallbackDecodingListOperation<T: Decodable>: BaseOperation<[T?]>,
+public final class StorageFallbackDecodingListOperation<T: Decodable>: BaseOperation<[T?]>,
     StorageDecodable, StorageModifierHandling {
     var dataList: [Data?]?
     var codingFactory: RuntimeCoderFactoryProtocol?
@@ -214,11 +214,11 @@ final class StorageFallbackDecodingListOperation<T: Decodable>: BaseOperation<[T
     }
 }
 
-protocol ConstantDecodable {
+public protocol ConstantDecodable {
     func decode(at path: ConstantCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON
 }
 
-extension ConstantDecodable {
+public extension ConstantDecodable {
     func decode(at path: ConstantCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON {
         guard let entry = codingFactory.metadata
             .getConstant(in: path.moduleName, constantName: path.constantName) else {
@@ -230,7 +230,7 @@ extension ConstantDecodable {
     }
 }
 
-final class StorageConstantOperation<T: Decodable>: BaseOperation<T>, ConstantDecodable {
+public final class StorageConstantOperation<T: Decodable>: BaseOperation<T>, ConstantDecodable {
     var codingFactory: RuntimeCoderFactoryProtocol?
 
     let path: ConstantCodingPath
@@ -265,7 +265,7 @@ final class StorageConstantOperation<T: Decodable>: BaseOperation<T>, ConstantDe
     }
 }
 
-final class PrimitiveConstantOperation<T: LosslessStringConvertible & Equatable>: BaseOperation<T>, ConstantDecodable {
+public final class PrimitiveConstantOperation<T: LosslessStringConvertible & Equatable>: BaseOperation<T>, ConstantDecodable {
     var codingFactory: RuntimeCoderFactoryProtocol?
 
     let path: ConstantCodingPath

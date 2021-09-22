@@ -1,7 +1,7 @@
 import Foundation
 
 
-struct JSONScaleDecodable<T: ScaleDecodable>: Decodable {
+public struct JSONScaleDecodable<T: ScaleDecodable>: Decodable {
     let underlyingValue: T?
 
     init(value: T?) {

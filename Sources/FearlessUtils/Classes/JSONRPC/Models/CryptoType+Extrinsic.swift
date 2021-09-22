@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension CryptoType {
+public extension CryptoType {
     init?(version: UInt8) {
         switch version {
         case 0:

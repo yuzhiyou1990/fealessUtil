@@ -1,6 +1,6 @@
 import Foundation
 
-struct StorageUpdate: Decodable {
+public struct StorageUpdate: Decodable {
     enum CodingKeys: String, CodingKey {
         case blockHash = "block"
         case changes
@@ -10,7 +10,7 @@ struct StorageUpdate: Decodable {
     let changes: [[String?]]?
 }
 
-struct StorageUpdateData {
+public struct StorageUpdateData {
     struct StorageUpdateChangeData {
         let key: Data
         let value: Data?

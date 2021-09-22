@@ -1,18 +1,18 @@
 import Foundation
 import RobinHood
 
-enum JSONRPCOperationError: Error {
+public enum JSONRPCOperationError: Error {
     case timeout
 }
 
-class JSONRPCOperation<P: Encodable, T: Decodable>: BaseOperation<T> {
+public class JSONRPCOperation<P: Encodable, T: Decodable>: BaseOperation<T> {
     let engine: JSONRPCEngine
     private(set) var requestId: UInt16?
     let method: String
     var parameters: P?
     let timeout: Int
 
-    init(engine: JSONRPCEngine, method: String, parameters: P? = nil, timeout: Int = 10) {
+    public init(engine: JSONRPCEngine, method: String, parameters: P? = nil, timeout: Int = 10) {
         self.engine = engine
         self.method = method
         self.parameters = parameters
@@ -82,4 +82,4 @@ class JSONRPCOperation<P: Encodable, T: Decodable>: BaseOperation<T> {
     }
 }
 
-final class JSONRPCListOperation<T: Decodable>: JSONRPCOperation<[String], T> {}
+public final class JSONRPCListOperation<T: Decodable>: JSONRPCOperation<[String], T> {}

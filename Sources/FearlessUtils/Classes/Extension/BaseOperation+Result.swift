@@ -1,7 +1,7 @@
 import Foundation
 import RobinHood
 
-extension BaseOperation {
+public extension BaseOperation {
     static func createWithError(_ error: Error) -> BaseOperation<ResultType> {
         let operation = BaseOperation<ResultType>()
         operation.result = .failure(error)

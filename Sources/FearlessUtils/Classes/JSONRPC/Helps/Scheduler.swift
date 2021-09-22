@@ -1,15 +1,15 @@
 import Foundation
 
-protocol SchedulerProtocol: AnyObject {
+public protocol SchedulerProtocol: AnyObject {
     func notifyAfter(_ seconds: TimeInterval)
     func cancel()
 }
 
-protocol SchedulerDelegate: AnyObject {
+public protocol SchedulerDelegate: AnyObject {
     func didTrigger(scheduler: SchedulerProtocol)
 }
 
-final class Scheduler: NSObject, SchedulerProtocol {
+public final class Scheduler: NSObject, SchedulerProtocol {
     weak var delegate: SchedulerDelegate?
 
     let callbackQueue: DispatchQueue?

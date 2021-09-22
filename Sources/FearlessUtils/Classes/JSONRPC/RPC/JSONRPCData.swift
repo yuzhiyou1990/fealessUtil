@@ -1,11 +1,11 @@
 import Foundation
 
-struct JSONRPCError: Error, Decodable {
+public struct JSONRPCError: Error, Decodable {
     let message: String
     let code: Int
 }
 
-struct JSONRPCData<T: Decodable>: Decodable {
+public struct JSONRPCData<T: Decodable>: Decodable {
     enum CodingKeys: String, CodingKey {
         case jsonrpc
         case result
@@ -19,7 +19,7 @@ struct JSONRPCData<T: Decodable>: Decodable {
     let identifier: UInt16
 }
 
-struct JSONRPCSubscriptionUpdate<T: Decodable>: Decodable {
+public struct JSONRPCSubscriptionUpdate<T: Decodable>: Decodable {
     struct Result: Decodable {
         let result: T
         let subscription: String
@@ -30,7 +30,7 @@ struct JSONRPCSubscriptionUpdate<T: Decodable>: Decodable {
     let params: Result
 }
 
-struct JSONRPCSubscriptionBasicUpdate: Decodable {
+public struct JSONRPCSubscriptionBasicUpdate: Decodable {
     struct Result: Decodable {
         let subscription: String
     }
@@ -40,7 +40,7 @@ struct JSONRPCSubscriptionBasicUpdate: Decodable {
     let params: Result
 }
 
-struct JSONRPCBasicData: Decodable {
+public struct JSONRPCBasicData: Decodable {
     enum CodingKeys: String, CodingKey {
         case jsonrpc
         case error

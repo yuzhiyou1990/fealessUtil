@@ -1,21 +1,21 @@
 import Foundation
 import Starscream
 
-protocol WebSocketConnectionProtocol: WebSocketClient {
+public protocol WebSocketConnectionProtocol: WebSocketClient {
     var callbackQueue: DispatchQueue { get }
     var delegate: WebSocketDelegate? { get set }
 }
 
-extension WebSocket: WebSocketConnectionProtocol {}
+public extension WebSocket: WebSocketConnectionProtocol {}
 
-protocol WebSocketEngineDelegate: AnyObject {
+public protocol WebSocketEngineDelegate: AnyObject {
     func webSocketDidChangeState(
         from oldState: WebSocketEngine.State,
         to newState: WebSocketEngine.State
     )
 }
 
-final class WebSocketEngine {
+public final class WebSocketEngine {
     static let sharedProcessingQueue = DispatchQueue(label: "jp.co.soramitsu.fearless.ws.processing")
 
     enum State {
@@ -65,7 +65,7 @@ final class WebSocketEngine {
 
     weak var delegate: WebSocketEngineDelegate?
 
-    init(
+    public init(
         url: URL,
         reconnectionStrategy: ReconnectionStrategyProtocol? = ExponentialReconnection(),
         version: String = "2.0",
@@ -97,7 +97,7 @@ final class WebSocketEngine {
         }
     }
 
-    init(
+    public init(
         connection: WebSocketConnectionProtocol,
         reconnectionStrategy: ReconnectionStrategyProtocol = ExponentialReconnection(),
         version: String = "2.0",
@@ -186,7 +186,7 @@ final class WebSocketEngine {
 
 // MARK: Internal
 
-extension WebSocketEngine {
+public extension WebSocketEngine {
     func changeState(_ newState: State) {
         state = newState
     }

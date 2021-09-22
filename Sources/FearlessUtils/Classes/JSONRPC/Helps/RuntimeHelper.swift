@@ -1,12 +1,12 @@
 import Foundation
 
-enum RuntimeHelperError: Error {
+public enum RuntimeHelperError: Error {
     case invalidCatalogBaseName
     case invalidCatalogNetworkName
     case invalidCatalogMetadataName
 }
 
-final class RuntimeHelper {
+public final class RuntimeHelper {
     static func createRuntimeMetadata(_ name: String) throws -> RuntimeMetadata {
         guard let metadataUrl = Bundle(for: self).url(forResource: name,
                                                       withExtension: "") else {

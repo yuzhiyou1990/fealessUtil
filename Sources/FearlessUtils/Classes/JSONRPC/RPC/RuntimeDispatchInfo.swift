@@ -1,6 +1,6 @@
 import Foundation
 
-struct RuntimeDispatchInfo: Codable {
+public struct RuntimeDispatchInfo: Codable {
     enum CodingKeys: String, CodingKey {
         case dispatchClass = "class"
         case fee = "partialFee"

@@ -2,7 +2,7 @@ import Foundation
 import SubstrateKeychain
 import BigInt
 
-protocol SubstarteExtrinsicFactoryProtocol {
+public protocol SubstarteExtrinsicFactoryProtocol {
     static func transferExtrinsic(from senderAccountId: Data,
                                   transferCall: ScaleCodable?,
                                   tip: BigUInt?,
@@ -10,7 +10,7 @@ protocol SubstarteExtrinsicFactoryProtocol {
                                   signer: @escaping (Data) throws -> Data) throws -> Data
 }
 
-struct SubstrateExtrinsicParameters {
+public struct SubstrateExtrinsicParameters {
     let nonce: UInt32
     let genesisHash: Data
     let specVersion: UInt32
@@ -21,7 +21,7 @@ struct SubstrateExtrinsicParameters {
     let tip: BigUInt?
 }
 
-struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
+public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
     static let extrinsicVersion: UInt8 = 132
 
     static func transferExtrinsic(from senderAccountId: Data,

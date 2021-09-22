@@ -1,6 +1,6 @@
 import Foundation
 
-struct SubstrateChain {
+public struct SubstrateChain {
     enum ChainNetError {
         case genesisHashError
     }

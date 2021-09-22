@@ -1,6 +1,6 @@
 import Foundation
 
-struct StringScaleMapper<T: LosslessStringConvertible & Equatable>: Codable, Equatable {
+public struct StringScaleMapper<T: LosslessStringConvertible & Equatable>: Codable, Equatable {
     let value: T
 
     init(value: T) {

@@ -1,6 +1,6 @@
 import Foundation
 
-struct JSONRPCInfo<P: Encodable>: Encodable {
+public struct JSONRPCInfo<P: Encodable>: Encodable {
     enum CodingKeys: String, CodingKey {
         case identifier = "id"
         case jsonrpc

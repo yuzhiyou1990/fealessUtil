@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct AccountId: ScaleCodable {
+public struct AccountId: ScaleCodable {
     let value: Data
 
     init(scaleDecoder: ScaleDecoding) throws {

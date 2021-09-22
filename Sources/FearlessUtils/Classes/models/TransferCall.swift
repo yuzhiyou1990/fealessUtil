@@ -2,11 +2,11 @@ import Foundation
 
 import BigInt
 
-struct TransferCall: Codable {
+public struct TransferCall: Codable {
     let dest: MultiAddress
     @StringCodable var value: BigUInt
 }
-struct AssetTransferCall: ScaleCodable {
+public struct AssetTransferCall: ScaleCodable {
     let receiver: Data
     let amount: BigUInt
     let currency_id: Data?

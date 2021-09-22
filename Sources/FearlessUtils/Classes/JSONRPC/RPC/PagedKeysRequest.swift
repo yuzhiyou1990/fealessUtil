@@ -1,6 +1,6 @@
 import Foundation
 
-struct PagedKeysRequest: Encodable {
+public struct PagedKeysRequest: Encodable {
     let key: String
     let count: UInt32
     let offset: String?

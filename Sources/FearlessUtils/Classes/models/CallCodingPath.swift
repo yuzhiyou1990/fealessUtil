@@ -6,12 +6,12 @@
 //
 
 import Foundation
-struct CallCodingPath: Equatable, Codable {
+public struct CallCodingPath: Equatable, Codable {
     let moduleName: String
     let callName: String
 }
 
-extension CallCodingPath {
+public extension CallCodingPath {
     var isTransfer: Bool {
         [.transfer, .transferKeepAlive].contains(self)
     }

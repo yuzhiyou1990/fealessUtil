@@ -1,18 +1,18 @@
 import Foundation
 
-enum JSONRPCEngineError: Error {
+public enum JSONRPCEngineError: Error {
     case emptyResult
     case remoteCancelled
     case clientCancelled
     case unknownError
 }
 
-protocol JSONRPCResponseHandling {
+public protocol JSONRPCResponseHandling {
     func handle(data: Data)
     func handle(error: Error)
 }
 
-struct JSONRPCRequest: Equatable {
+public struct JSONRPCRequest: Equatable {
     let requestId: UInt16
     let data: Data
     let options: JSONRPCOptions
@@ -21,7 +21,7 @@ struct JSONRPCRequest: Equatable {
     static func == (lhs: Self, rhs: Self) -> Bool { lhs.requestId == rhs.requestId }
 }
 
-struct JSONRPCResponseHandler<T: Decodable>: JSONRPCResponseHandling {
+public struct JSONRPCResponseHandler<T: Decodable>: JSONRPCResponseHandling {
     let completionClosure: (Result<T, Error>) -> Void
 
     func handle(data: Data) {
@@ -41,7 +41,7 @@ struct JSONRPCResponseHandler<T: Decodable>: JSONRPCResponseHandling {
     }
 }
 
-struct JSONRPCOptions {
+public struct JSONRPCOptions {
     let resendOnReconnect: Bool
 
     init(resendOnReconnect: Bool = true) {
@@ -49,7 +49,7 @@ struct JSONRPCOptions {
     }
 }
 
-protocol JSONRPCSubscribing: AnyObject {
+public protocol JSONRPCSubscribing: AnyObject {
     var requestId: UInt16 { get }
     var requestData: Data { get }
     var requestOptions: JSONRPCOptions { get }
@@ -59,7 +59,7 @@ protocol JSONRPCSubscribing: AnyObject {
     func handle(error: Error, unsubscribed: Bool)
 }
 
-final class JSONRPCSubscription<T: Decodable>: JSONRPCSubscribing {
+public final class JSONRPCSubscription<T: Decodable>: JSONRPCSubscribing {
     let requestId: UInt16
     let requestData: Data
     let requestOptions: JSONRPCOptions
@@ -94,7 +94,7 @@ final class JSONRPCSubscription<T: Decodable>: JSONRPCSubscribing {
     }
 }
 
-protocol JSONRPCEngine: AnyObject {
+public protocol JSONRPCEngine: AnyObject {
     func callMethod<P: Encodable, T: Decodable>(
         _ method: String,
         params: P?,
@@ -113,7 +113,7 @@ protocol JSONRPCEngine: AnyObject {
     func cancelForIdentifier(_ identifier: UInt16)
 }
 
-extension JSONRPCEngine {
+public extension JSONRPCEngine {
     func callMethod<P: Encodable, T: Decodable>(
         _ method: String,
         params: P?,

@@ -1,10 +1,10 @@
 import Foundation
 
-protocol ChainStorageIdFactoryProtocol {
+public protocol ChainStorageIdFactoryProtocol {
     func createIdentifier(for key: Data) -> String
 }
 
-final class ChainStorageIdFactory: ChainStorageIdFactoryProtocol {
+public final class ChainStorageIdFactory: ChainStorageIdFactoryProtocol {
     let genesisData: Data
 
     init(chain: SubstrateChain) throws {

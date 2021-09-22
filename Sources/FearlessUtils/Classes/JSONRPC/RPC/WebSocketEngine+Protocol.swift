@@ -1,6 +1,6 @@
 import Foundation
 
-extension WebSocketEngine: JSONRPCEngine {
+public extension WebSocketEngine: JSONRPCEngine {
     func callMethod<P: Encodable, T: Decodable>(
         _ method: String,
         params: P?,
