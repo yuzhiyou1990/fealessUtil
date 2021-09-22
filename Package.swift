@@ -19,6 +19,7 @@ let package = Package(
         .package(name: "SS58Factory", url: "https://github.com/lishuailibertine/SS58Factory", from: "0.1.4"),
         .package(name: "scrypt", url: "https://github.com/v57/scrypt.c", from: "0.1.1"),
         .package(name: "RobinHood", url: "https://github.com/lishuailibertine/robinhood-ios", from: "3.0.0"),
+        .package(name: "SwiftyBeaver", url: "https://github.com/SwiftyBeaver/SwiftyBeaver", from: "1.9.5"),
         
     ],
     targets: [
@@ -26,6 +27,6 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "FearlessUtils",
-            dependencies: ["BigInt","TweetNacl","xxHash-Swift","SubstrateKeychain","SS58Factory","scrypt","RobinHood"]),
+            dependencies: ["BigInt","TweetNacl","xxHash-Swift","SubstrateKeychain","SS58Factory","scrypt","RobinHood","SwiftyBeaver"]),
     ]
 )
