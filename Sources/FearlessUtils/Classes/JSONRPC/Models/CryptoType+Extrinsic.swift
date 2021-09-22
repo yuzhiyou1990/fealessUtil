@@ -1,8 +1,15 @@
+//
+//  CryptoType+Extrinsic.swift
+//  FearlessDemo
+//
+//  Created by li shuai on 2021/8/5.
+//
+
 import Foundation
 
 extension CryptoType {
-    init?(onChainType: UInt8) {
-        switch onChainType {
+    init?(version: UInt8) {
+        switch version {
         case 0:
             self = .ed25519
         case 1:
@@ -14,7 +21,7 @@ extension CryptoType {
         }
     }
 
-    var onChainType: UInt8 {
+    var version: UInt8 {
         switch self {
         case .sr25519:
             return 1
