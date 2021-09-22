@@ -10,6 +10,11 @@ public struct Call {
     public let moduleIndex: UInt8
     public let callIndex: UInt8
     public let arguments: Data?
+    public init(moduleIndex: UInt8,callIndex: UInt8,arguments: Data?){
+        self.moduleIndex = moduleIndex
+        self.callIndex = callIndex
+        self.arguments = arguments
+    }
 }
 
 public enum ExtrinsicCodingError: Error {
