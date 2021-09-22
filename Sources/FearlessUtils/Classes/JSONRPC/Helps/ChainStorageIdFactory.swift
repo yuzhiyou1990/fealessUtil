@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol ChainStorageIdFactoryProtocol {
-    public  func createIdentifier(for key: Data) -> String
+      func createIdentifier(for key: Data) -> String
 }
 
 public final class ChainStorageIdFactory: ChainStorageIdFactoryProtocol {

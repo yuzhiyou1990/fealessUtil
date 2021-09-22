@@ -1,12 +1,12 @@
 import Foundation
 
 public protocol SchedulerProtocol: AnyObject {
-    public  func notifyAfter(_ seconds: TimeInterval)
-    public func cancel()
+     func notifyAfter(_ seconds: TimeInterval)
+     func cancel()
 }
 
 public protocol SchedulerDelegate: AnyObject {
-    public  func didTrigger(scheduler: SchedulerProtocol)
+      func didTrigger(scheduler: SchedulerProtocol)
 }
 
 public final class Scheduler: NSObject, SchedulerProtocol {

@@ -1,13 +1,13 @@
 import Foundation
 
-protocol Longrunable {
+public protocol Longrunable {
     associatedtype ResultType
 
     func start(with completionClosure: @escaping (Result<ResultType, Error>) -> Void)
     func cancel()
 }
 
-final class AnyLongrun<T>: Longrunable {
+public final class AnyLongrun<T>: Longrunable {
     typealias ResultType = T
 
     private let privateStart: (@escaping (Result<ResultType, Error>) -> Void) -> Void

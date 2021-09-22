@@ -1,10 +1,10 @@
 import Foundation
 import RobinHood
 
-class LongrunOperation<T>: BaseOperation<T> {
-    let longrun: AnyLongrun<T>
+public class LongrunOperation<T>: BaseOperation<T> {
+    public let longrun: AnyLongrun<T>
 
-    init(longrun: AnyLongrun<T>) {
+    public init(longrun: AnyLongrun<T>) {
         self.longrun = longrun
     }
 

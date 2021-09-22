@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol ReconnectionStrategyProtocol {
-    public func reconnectAfter(attempt: Int) -> TimeInterval?
+     func reconnectAfter(attempt: Int) -> TimeInterval?
 }
 
 public struct ExponentialReconnection: ReconnectionStrategyProtocol {

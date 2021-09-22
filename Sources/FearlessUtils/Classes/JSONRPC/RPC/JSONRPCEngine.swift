@@ -8,8 +8,8 @@ public enum JSONRPCEngineError: Error {
 }
 
 public protocol JSONRPCResponseHandling {
-    public func handle(data: Data)
-    public func handle(error: Error)
+     func handle(data: Data)
+     func handle(error: Error)
 }
 
 public struct JSONRPCRequest: Equatable {
@@ -50,13 +50,13 @@ public struct JSONRPCOptions {
 }
 
 public protocol JSONRPCSubscribing: AnyObject {
-    public var requestId: UInt16 { get }
-    public var requestData: Data { get }
-    public var requestOptions: JSONRPCOptions { get }
-    public var remoteId: String? { get set }
+     var requestId: UInt16 { get }
+     var requestData: Data { get }
+     var requestOptions: JSONRPCOptions { get }
+     var remoteId: String? { get set }
 
-    public func handle(data: Data) throws
-    public func handle(error: Error, unsubscribed: Bool)
+     func handle(data: Data) throws
+     func handle(error: Error, unsubscribed: Bool)
 }
 
 public final class JSONRPCSubscription<T: Decodable>: JSONRPCSubscribing {
@@ -95,14 +95,14 @@ public final class JSONRPCSubscription<T: Decodable>: JSONRPCSubscribing {
 }
 
 public protocol JSONRPCEngine: AnyObject {
-    public func callMethod<P: Encodable, T: Decodable>(
+     func callMethod<P: Encodable, T: Decodable>(
         _ method: String,
         params: P?,
         options: JSONRPCOptions,
         completion closure: ((Result<T, Error>) -> Void)?
     ) throws -> UInt16
 
-    public  func subscribe<P: Encodable, T: Decodable>(
+      func subscribe<P: Encodable, T: Decodable>(
         _ method: String,
         params: P?,
         updateClosure: @escaping (T) -> Void,

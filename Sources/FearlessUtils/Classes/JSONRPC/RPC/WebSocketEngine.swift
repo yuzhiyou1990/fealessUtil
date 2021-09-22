@@ -2,14 +2,14 @@ import Foundation
 import Starscream
 
 public protocol WebSocketConnectionProtocol: WebSocketClient {
-    public  var callbackQueue: DispatchQueue { get }
-    public  var delegate: WebSocketDelegate? { get set }
+      var callbackQueue: DispatchQueue { get }
+      var delegate: WebSocketDelegate? { get set }
 }
 
 public extension WebSocket: WebSocketConnectionProtocol {}
 
 public protocol WebSocketEngineDelegate: AnyObject {
-    public func webSocketDidChangeState(
+     func webSocketDidChangeState(
         from oldState: WebSocketEngine.State,
         to newState: WebSocketEngine.State
     )

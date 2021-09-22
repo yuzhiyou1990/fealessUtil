@@ -1,12 +1,12 @@
 import Foundation
 
 public protocol RuntimeCoderFactoryProtocol {
-    public var specVersion: UInt32 { get }
-    public var txVersion: UInt32 { get }
-    public var metadata: RuntimeMetadata { get }
+     var specVersion: UInt32 { get }
+     var txVersion: UInt32 { get }
+     var metadata: RuntimeMetadata { get }
 
-    public func createEncoder() -> DynamicScaleEncoding
-    public func createDecoder(from data: Data) throws -> DynamicScaleDecoding
+     func createEncoder() -> DynamicScaleEncoding
+     func createDecoder(from data: Data) throws -> DynamicScaleDecoding
 }
 
 public final  class RuntimeCoderFactory: RuntimeCoderFactoryProtocol {

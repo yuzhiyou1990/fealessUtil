@@ -8,7 +8,7 @@ public enum StorageDecodingOperationError: Error {
 }
 
 public protocol StorageDecodable {
-    public  func decode(data: Data, path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON
+      func decode(data: Data, path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON
 }
 
 public extension StorageDecodable {

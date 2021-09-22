@@ -16,7 +16,7 @@ public struct ChildStorageResponse<T: Decodable> {
 }
 
 public protocol StorageRequestFactoryProtocol {
-    public  func queryItems<K, T>(
+      func queryItems<K, T>(
         engine: JSONRPCEngine,
         keyParams: @escaping () throws -> [K],
         factory: @escaping () throws -> RuntimeCoderFactoryProtocol,
@@ -25,7 +25,7 @@ public protocol StorageRequestFactoryProtocol {
     )
         -> CompoundOperationWrapper<[StorageResponse<T>]> where K: Encodable, T: Decodable
 
-    public  func queryItems<K1, K2, T>(
+      func queryItems<K1, K2, T>(
         engine: JSONRPCEngine,
         keyParams1: @escaping () throws -> [K1],
         keyParams2: @escaping () throws -> [K2],
@@ -35,7 +35,7 @@ public protocol StorageRequestFactoryProtocol {
     )
         -> CompoundOperationWrapper<[StorageResponse<T>]> where K1: Encodable, K2: Encodable, T: Decodable
 
-    public  func queryItems<T>(
+      func queryItems<T>(
         engine: JSONRPCEngine,
         keys: @escaping () throws -> [Data],
         factory: @escaping () throws -> RuntimeCoderFactoryProtocol,
@@ -44,7 +44,7 @@ public protocol StorageRequestFactoryProtocol {
     )
         -> CompoundOperationWrapper<[StorageResponse<T>]> where T: Decodable
 
-    public func queryChildItem<T>(
+     func queryChildItem<T>(
         engine: JSONRPCEngine,
         storageKeyParam: @escaping () throws -> Data,
         childKeyParam: @escaping () throws -> Data,

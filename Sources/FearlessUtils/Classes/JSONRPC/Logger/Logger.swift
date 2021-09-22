@@ -2,11 +2,11 @@ import Foundation
 import SwiftyBeaver
 
 public protocol LoggerProtocol {
-    public func verbose(message: String, file: String, function: String, line: Int)
-    public func debug(message: String, file: String, function: String, line: Int)
-    public func info(message: String, file: String, function: String, line: Int)
-    public func warning(message: String, file: String, function: String, line: Int)
-    public func error(message: String, file: String, function: String, line: Int)
+     func verbose(message: String, file: String, function: String, line: Int)
+     func debug(message: String, file: String, function: String, line: Int)
+     func info(message: String, file: String, function: String, line: Int)
+     func warning(message: String, file: String, function: String, line: Int)
+     func error(message: String, file: String, function: String, line: Int)
 }
 
 public extension LoggerProtocol {
