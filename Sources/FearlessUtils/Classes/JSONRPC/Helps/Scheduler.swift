@@ -1,23 +1,23 @@
 import Foundation
 
 public protocol SchedulerProtocol: AnyObject {
-    func notifyAfter(_ seconds: TimeInterval)
-    func cancel()
+    public  func notifyAfter(_ seconds: TimeInterval)
+    public func cancel()
 }
 
 public protocol SchedulerDelegate: AnyObject {
-    func didTrigger(scheduler: SchedulerProtocol)
+    public  func didTrigger(scheduler: SchedulerProtocol)
 }
 
 public final class Scheduler: NSObject, SchedulerProtocol {
-    weak var delegate: SchedulerDelegate?
+    public weak var delegate: SchedulerDelegate?
 
-    let callbackQueue: DispatchQueue?
+    public let callbackQueue: DispatchQueue?
 
     private var lock = NSLock()
     private var timer: DispatchSourceTimer?
 
-    init(with delegate: SchedulerDelegate, callbackQueue: DispatchQueue? = nil) {
+    public   init(with delegate: SchedulerDelegate, callbackQueue: DispatchQueue? = nil) {
         self.delegate = delegate
         self.callbackQueue = callbackQueue
 
@@ -28,7 +28,7 @@ public final class Scheduler: NSObject, SchedulerProtocol {
         cancel()
     }
 
-    func notifyAfter(_ seconds: TimeInterval) {
+    public  func notifyAfter(_ seconds: TimeInterval) {
         lock.lock()
 
         defer {
@@ -49,7 +49,7 @@ public final class Scheduler: NSObject, SchedulerProtocol {
         timer?.resume()
     }
 
-    func cancel() {
+    public   func cancel() {
         lock.lock()
 
         defer {

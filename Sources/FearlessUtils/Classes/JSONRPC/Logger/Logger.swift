@@ -2,41 +2,41 @@ import Foundation
 import SwiftyBeaver
 
 public protocol LoggerProtocol {
-    func verbose(message: String, file: String, function: String, line: Int)
-    func debug(message: String, file: String, function: String, line: Int)
-    func info(message: String, file: String, function: String, line: Int)
-    func warning(message: String, file: String, function: String, line: Int)
-    func error(message: String, file: String, function: String, line: Int)
+    public func verbose(message: String, file: String, function: String, line: Int)
+    public func debug(message: String, file: String, function: String, line: Int)
+    public func info(message: String, file: String, function: String, line: Int)
+    public func warning(message: String, file: String, function: String, line: Int)
+    public func error(message: String, file: String, function: String, line: Int)
 }
 
 public extension LoggerProtocol {
-    func verbose(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
+    public  func verbose(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
         verbose(message: message, file: file, function: function, line: line)
     }
 
-    func debug(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
+    public  func debug(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
         debug(message: message, file: file, function: function, line: line)
     }
 
-    func info(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
+    public  func info(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
         info(message: message, file: file, function: function, line: line)
     }
 
-    func warning(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
+    public func warning(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
         warning(message: message, file: file, function: function, line: line)
     }
 
-    func error(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
+    public func error(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
         error(message: message, file: file, function: function, line: line)
     }
 }
 
 public final class Logger {
-    static let shared = Logger()
+    public  static let shared = Logger()
 
-    let log = SwiftyBeaver.self
+    public  let log = SwiftyBeaver.self
 
-    var minLevel: SwiftyBeaver.Level? {
+    public  var minLevel: SwiftyBeaver.Level? {
         get {
             log.destinations.first?.minLevel
         }
@@ -66,7 +66,7 @@ public final class Logger {
 }
 
 public extension Logger: LoggerProtocol {
-    func verbose(message: String, file: String, function: String, line: Int) {
+    public  func verbose(message: String, file: String, function: String, line: Int) {
         log.custom(
             level: .verbose,
             message: message,
@@ -76,7 +76,7 @@ public extension Logger: LoggerProtocol {
         )
     }
 
-    func debug(message: String, file: String, function: String, line: Int) {
+    public func debug(message: String, file: String, function: String, line: Int) {
         log.custom(
             level: .debug,
             message: message,
@@ -86,7 +86,7 @@ public extension Logger: LoggerProtocol {
         )
     }
 
-    func info(message: String, file: String, function: String, line: Int) {
+    public  func info(message: String, file: String, function: String, line: Int) {
         log.custom(
             level: .info,
             message: message,
@@ -96,7 +96,7 @@ public extension Logger: LoggerProtocol {
         )
     }
 
-    func warning(message: String, file: String, function: String, line: Int) {
+    public func warning(message: String, file: String, function: String, line: Int) {
         log.custom(
             level: .warning,
             message: message,
@@ -106,7 +106,7 @@ public extension Logger: LoggerProtocol {
         )
     }
 
-    func error(message: String, file: String, function: String, line: Int) {
+    public  func error(message: String, file: String, function: String, line: Int) {
         log.custom(
             level: .error,
             message: message,

@@ -1,13 +1,13 @@
 import Foundation
 
 public enum RuntimeHelperError: Error {
-    case invalidCatalogBaseName
-    case invalidCatalogNetworkName
-    case invalidCatalogMetadataName
+    public  case invalidCatalogBaseName
+    public  case invalidCatalogNetworkName
+    public case invalidCatalogMetadataName
 }
 
 public final class RuntimeHelper {
-    static func createRuntimeMetadata(_ name: String) throws -> RuntimeMetadata {
+    public  static func createRuntimeMetadata(_ name: String) throws -> RuntimeMetadata {
         guard let metadataUrl = Bundle(for: self).url(forResource: name,
                                                       withExtension: "") else {
             throw RuntimeHelperError.invalidCatalogMetadataName
@@ -20,12 +20,12 @@ public final class RuntimeHelper {
         let decoder = try ScaleDecoder(data: expectedData)
         return try RuntimeMetadata(scaleDecoder: decoder)
     }
-    static func createRuntimeMetadataWithData(_ dataHex: String) throws -> RuntimeMetadata {
+    public  static func createRuntimeMetadataWithData(_ dataHex: String) throws -> RuntimeMetadata {
         let expectedData = try Data(hexString: dataHex)
         let decoder = try ScaleDecoder(data: expectedData)
         return try RuntimeMetadata(scaleDecoder: decoder)
     }
-    static func createTypeRegistry(from name: String, runtimeMetadataName: String) throws
+    public  static func createTypeRegistry(from name: String, runtimeMetadataName: String) throws
     -> TypeRegistry {
         guard let url = Bundle.main.url(forResource: name, withExtension: "json") else {
             throw RuntimeHelperError.invalidCatalogBaseName
@@ -42,7 +42,7 @@ public final class RuntimeHelper {
         return registry
     }
 
-    static func createTypeRegistryCatalog(from baseName: String,
+    public  static func createTypeRegistryCatalog(from baseName: String,
                                           networkName: String,
                                           runtimeMetadataName: String)
     throws -> TypeRegistryCatalog {
@@ -53,7 +53,7 @@ public final class RuntimeHelper {
                                              runtimeMetadata: runtimeMetadata)
     }
 
-    static func createTypeRegistryCatalog(from baseName: String,
+    public  static func createTypeRegistryCatalog(from baseName: String,
                                           networkName: String,
                                           runtimeMetadata: RuntimeMetadata)
     throws -> TypeRegistryCatalog {
@@ -76,7 +76,7 @@ public final class RuntimeHelper {
 
         return registry
     }
-    static func createTypeRegistryCatalog(from baseName: String,
+    public  static func createTypeRegistryCatalog(from baseName: String,
                                           versionJson networkJson: String?,
                                           runtimeMetadata: RuntimeMetadata)
     throws -> TypeRegistryCatalog {

@@ -1,21 +1,21 @@
 import Foundation
 
 public struct StorageUpdate: Decodable {
-    enum CodingKeys: String, CodingKey {
-        case blockHash = "block"
-        case changes
+    public  enum CodingKeys: String, CodingKey {
+        public case blockHash = "block"
+        public  case changes
     }
 
-    let blockHash: String?
-    let changes: [[String?]]?
+    public  let blockHash: String?
+    public let changes: [[String?]]?
 }
 
 public struct StorageUpdateData {
-    struct StorageUpdateChangeData {
-        let key: Data
-        let value: Data?
+    public struct StorageUpdateChangeData {
+        public  let key: Data
+        public  let value: Data?
 
-        init?(change: [String?]) {
+        public  init?(change: [String?]) {
             guard change.count == 2 else {
                 return nil
             }
@@ -34,10 +34,10 @@ public struct StorageUpdateData {
         }
     }
 
-    let blockHash: Data?
-    let changes: [StorageUpdateChangeData]
+    public  let blockHash: Data?
+    public let changes: [StorageUpdateChangeData]
 
-    init(update: StorageUpdate) {
+    public  init(update: StorageUpdate) {
         if
             let blockHashString = update.blockHash,
             let blockHashData = try? Data(hexString: blockHashString) {

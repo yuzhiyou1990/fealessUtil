@@ -3,16 +3,16 @@ import Foundation
 import RobinHood
 
 public enum StorageDecodingOperationError: Error {
-    case missingRequiredParams
-    case invalidStoragePath
+    public  case missingRequiredParams
+    public case invalidStoragePath
 }
 
 public protocol StorageDecodable {
-    func decode(data: Data, path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON
+    public  func decode(data: Data, path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON
 }
 
 public extension StorageDecodable {
-    func decode(data: Data, path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON {
+    public func decode(data: Data, path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON {
         guard let entry = codingFactory.metadata.getStorageMetadata(
             in: path.moduleName,
             storageName: path.itemName
@@ -26,11 +26,11 @@ public extension StorageDecodable {
 }
 
 public protocol StorageModifierHandling {
-    func handleModifier(at path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON?
+    public func handleModifier(at path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON?
 }
 
 public extension StorageModifierHandling {
-    func handleModifier(at path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON? {
+    public  func handleModifier(at path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON? {
         guard let entry = codingFactory.metadata.getStorageMetadata(
             in: path.moduleName,
             storageName: path.itemName
@@ -49,12 +49,12 @@ public extension StorageModifierHandling {
 }
 
 public final class StorageDecodingOperation<T: Decodable>: BaseOperation<T>, StorageDecodable {
-    var data: Data?
-    var codingFactory: RuntimeCoderFactoryProtocol?
+    public var data: Data?
+    public  var codingFactory: RuntimeCoderFactoryProtocol?
 
-    let path: StorageCodingPath
+    public  let path: StorageCodingPath
 
-    init(path: StorageCodingPath, data: Data? = nil) {
+    public init(path: StorageCodingPath, data: Data? = nil) {
         self.path = path
         self.data = data
 
@@ -87,12 +87,12 @@ public final class StorageDecodingOperation<T: Decodable>: BaseOperation<T>, Sto
 
 public final class StorageFallbackDecodingOperation<T: Decodable>: BaseOperation<T?>,
     StorageDecodable, StorageModifierHandling {
-    var data: Data?
-    var codingFactory: RuntimeCoderFactoryProtocol?
+    public  var data: Data?
+    public  var codingFactory: RuntimeCoderFactoryProtocol?
 
-    let path: StorageCodingPath
+    public  let path: StorageCodingPath
 
-    init(path: StorageCodingPath, data: Data? = nil) {
+    public   init(path: StorageCodingPath, data: Data? = nil) {
         self.path = path
         self.data = data
 
@@ -130,12 +130,12 @@ public final class StorageFallbackDecodingOperation<T: Decodable>: BaseOperation
 }
 
 public final class StorageDecodingListOperation<T: Decodable>: BaseOperation<[T]>, StorageDecodable {
-    var dataList: [Data]?
-    var codingFactory: RuntimeCoderFactoryProtocol?
+    public  var dataList: [Data]?
+    public var codingFactory: RuntimeCoderFactoryProtocol?
 
-    let path: StorageCodingPath
+    public  let path: StorageCodingPath
 
-    init(path: StorageCodingPath, dataList: [Data]? = nil) {
+    public  init(path: StorageCodingPath, dataList: [Data]? = nil) {
         self.path = path
         self.dataList = dataList
 
@@ -171,12 +171,12 @@ public final class StorageDecodingListOperation<T: Decodable>: BaseOperation<[T]
 
 public final class StorageFallbackDecodingListOperation<T: Decodable>: BaseOperation<[T?]>,
     StorageDecodable, StorageModifierHandling {
-    var dataList: [Data?]?
-    var codingFactory: RuntimeCoderFactoryProtocol?
+    public var dataList: [Data?]?
+    public  var codingFactory: RuntimeCoderFactoryProtocol?
 
-    let path: StorageCodingPath
+    public  let path: StorageCodingPath
 
-    init(path: StorageCodingPath, dataList: [Data?]? = nil) {
+    public init(path: StorageCodingPath, dataList: [Data?]? = nil) {
         self.path = path
         self.dataList = dataList
 
@@ -215,11 +215,11 @@ public final class StorageFallbackDecodingListOperation<T: Decodable>: BaseOpera
 }
 
 public protocol ConstantDecodable {
-    func decode(at path: ConstantCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON
+    public  func decode(at path: ConstantCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON
 }
 
 public extension ConstantDecodable {
-    func decode(at path: ConstantCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON {
+    public func decode(at path: ConstantCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON {
         guard let entry = codingFactory.metadata
             .getConstant(in: path.moduleName, constantName: path.constantName) else {
             throw StorageDecodingOperationError.invalidStoragePath
@@ -231,11 +231,11 @@ public extension ConstantDecodable {
 }
 
 public final class StorageConstantOperation<T: Decodable>: BaseOperation<T>, ConstantDecodable {
-    var codingFactory: RuntimeCoderFactoryProtocol?
+    public  var codingFactory: RuntimeCoderFactoryProtocol?
 
-    let path: ConstantCodingPath
+    public  let path: ConstantCodingPath
 
-    init(path: ConstantCodingPath) {
+    public  init(path: ConstantCodingPath) {
         self.path = path
 
         super.init()
@@ -266,11 +266,11 @@ public final class StorageConstantOperation<T: Decodable>: BaseOperation<T>, Con
 }
 
 public final class PrimitiveConstantOperation<T: LosslessStringConvertible & Equatable>: BaseOperation<T>, ConstantDecodable {
-    var codingFactory: RuntimeCoderFactoryProtocol?
+    public var codingFactory: RuntimeCoderFactoryProtocol?
 
-    let path: ConstantCodingPath
+    public  let path: ConstantCodingPath
 
-    init(path: ConstantCodingPath) {
+    public init(path: ConstantCodingPath) {
         self.path = path
 
         super.init()

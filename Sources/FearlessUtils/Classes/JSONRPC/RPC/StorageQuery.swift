@@ -1,10 +1,10 @@
 import Foundation
 
-struct StorageQuery: Encodable {
-    let keys: [Data]
-    let blockHash: Data?
+public struct StorageQuery: Encodable {
+    public let keys: [Data]
+    public let blockHash: Data?
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var unkeyedContainer = encoder.unkeyedContainer()
 
         let hexKeys = keys.map { $0.toHex(includePrefix: true) }

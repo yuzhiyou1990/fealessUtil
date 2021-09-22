@@ -1,16 +1,16 @@
 import Foundation
 
 public struct SignedBlock: Decodable {
-    let block: Block
-    let justification: Data?
+    public let block: Block
+    public let justification: Data?
 }
 
 public struct Block: Decodable {
-    struct Digest: Decodable {
+    public struct Digest: Decodable {
         let logs: [String]
     }
 
-    struct Header: Decodable {
+    public  struct Header: Decodable {
         let digest: Digest
         let extrinsicsRoot: String
         let number: String
@@ -18,6 +18,6 @@ public struct Block: Decodable {
         let parentHash: String
     }
 
-    let extrinsics: [String]
-    let header: Header
+    public  let extrinsics: [String]
+    public  let header: Header
 }

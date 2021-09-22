@@ -2,7 +2,7 @@ import Foundation
 import RobinHood
 
 public extension CompoundOperationWrapper {
-    func addDependency(operations: [Operation]) {
+    public  func addDependency(operations: [Operation]) {
         allOperations.forEach { nextOperation in
             operations.forEach { prevOperation in
                 nextOperation.addDependency(prevOperation)
@@ -10,7 +10,7 @@ public extension CompoundOperationWrapper {
         }
     }
 
-    func addDependency(wrapper: CompoundOperationWrapper) {
+    public func addDependency(wrapper: CompoundOperationWrapper) {
         addDependency(operations: wrapper.allOperations)
     }
 }

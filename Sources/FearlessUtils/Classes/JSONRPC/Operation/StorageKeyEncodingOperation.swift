@@ -3,19 +3,19 @@ import Foundation
 import RobinHood
 
 public enum StorageKeyEncodingOperationError: Error {
-    case missingRequiredParams
-    case incompatibleStorageType
-    case invalidStoragePath
+    public  case missingRequiredParams
+    public  case incompatibleStorageType
+    public case invalidStoragePath
 }
 
 public class MapKeyEncodingOperation<T: Encodable>: BaseOperation<[Data]> {
-    var keyParams: [T]?
-    var codingFactory: RuntimeCoderFactoryProtocol?
+    public var keyParams: [T]?
+    public  var codingFactory: RuntimeCoderFactoryProtocol?
 
-    let path: StorageCodingPath
-    let storageKeyFactory: StorageKeyFactoryProtocol
+    public  let path: StorageCodingPath
+    public  let storageKeyFactory: StorageKeyFactoryProtocol
 
-    init(path: StorageCodingPath, storageKeyFactory: StorageKeyFactoryProtocol, keyParams: [T]? = nil) {
+    public  init(path: StorageCodingPath, storageKeyFactory: StorageKeyFactoryProtocol, keyParams: [T]? = nil) {
         self.path = path
         self.keyParams = keyParams
         self.storageKeyFactory = storageKeyFactory
@@ -84,14 +84,14 @@ public class MapKeyEncodingOperation<T: Encodable>: BaseOperation<[Data]> {
 }
 
 public class DoubleMapKeyEncodingOperation<T1: Encodable, T2: Encodable>: BaseOperation<[Data]> {
-    var keyParams1: [T1]?
-    var keyParams2: [T2]?
-    var codingFactory: RuntimeCoderFactoryProtocol?
+    public  var keyParams1: [T1]?
+    public  var keyParams2: [T2]?
+    public  var codingFactory: RuntimeCoderFactoryProtocol?
 
-    let path: StorageCodingPath
-    let storageKeyFactory: StorageKeyFactoryProtocol
+    public  let path: StorageCodingPath
+    public  let storageKeyFactory: StorageKeyFactoryProtocol
 
-    init(
+    public init(
         path: StorageCodingPath,
         storageKeyFactory: StorageKeyFactoryProtocol,
         keyParams1: [T1]? = nil,
@@ -177,19 +177,19 @@ public class DoubleMapKeyEncodingOperation<T1: Encodable, T2: Encodable>: BaseOp
 }
 
 public extension MapKeyEncodingOperation {
-    func localWrapper(for factory: ChainStorageIdFactoryProtocol) -> CompoundOperationWrapper<[String]> {
+    public func localWrapper(for factory: ChainStorageIdFactoryProtocol) -> CompoundOperationWrapper<[String]> {
         baseLocalWrapper(for: factory)
     }
 }
 
 public extension DoubleMapKeyEncodingOperation {
-    func localWrapper(for factory: ChainStorageIdFactoryProtocol) -> CompoundOperationWrapper<[String]> {
+    public  func localWrapper(for factory: ChainStorageIdFactoryProtocol) -> CompoundOperationWrapper<[String]> {
         baseLocalWrapper(for: factory)
     }
 }
 
 private extension BaseOperation where ResultType == [Data] {
-    func baseLocalWrapper(for factory: ChainStorageIdFactoryProtocol) -> CompoundOperationWrapper<[String]> {
+    public  func baseLocalWrapper(for factory: ChainStorageIdFactoryProtocol) -> CompoundOperationWrapper<[String]> {
         let mapOperation = ClosureOperation<[String]> {
             let keys = try self.extractNoCancellableResultData()
             return keys.map { factory.createIdentifier(for: $0) }

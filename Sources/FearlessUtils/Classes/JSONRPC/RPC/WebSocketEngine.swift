@@ -2,34 +2,34 @@ import Foundation
 import Starscream
 
 public protocol WebSocketConnectionProtocol: WebSocketClient {
-    var callbackQueue: DispatchQueue { get }
-    var delegate: WebSocketDelegate? { get set }
+    public  var callbackQueue: DispatchQueue { get }
+    public  var delegate: WebSocketDelegate? { get set }
 }
 
 public extension WebSocket: WebSocketConnectionProtocol {}
 
 public protocol WebSocketEngineDelegate: AnyObject {
-    func webSocketDidChangeState(
+    public func webSocketDidChangeState(
         from oldState: WebSocketEngine.State,
         to newState: WebSocketEngine.State
     )
 }
 
 public final class WebSocketEngine {
-    static let sharedProcessingQueue = DispatchQueue(label: "jp.co.soramitsu.fearless.ws.processing")
+    public  static let sharedProcessingQueue = DispatchQueue(label: "jp.co.soramitsu.fearless.ws.processing")
 
-    enum State {
+    public enum State {
         case notConnected
         case connecting(attempt: Int)
         case waitingReconnection(attempt: Int)
         case connected
     }
 
-    let connection: WebSocketConnectionProtocol
-    let version: String
-    let logger: LoggerProtocol
-    let completionQueue: DispatchQueue
-    let pingInterval: TimeInterval
+    public let connection: WebSocketConnectionProtocol
+    public let version: String
+    public let logger: LoggerProtocol
+    public let completionQueue: DispatchQueue
+    public let pingInterval: TimeInterval
 
     private(set) var state: State = .notConnected {
         didSet {
@@ -63,7 +63,7 @@ public final class WebSocketEngine {
     private(set) var inProgressRequests: [UInt16: JSONRPCRequest] = [:]
     private(set) var subscriptions: [UInt16: JSONRPCSubscribing] = [:]
 
-    weak var delegate: WebSocketEngineDelegate?
+    public weak var delegate: WebSocketEngineDelegate?
 
     public init(
         url: URL,
@@ -127,7 +127,7 @@ public final class WebSocketEngine {
         disconnectIfNeeded()
     }
 
-    func connectIfNeeded() {
+    public  func connectIfNeeded() {
         mutex.lock()
 
         switch state {
@@ -148,7 +148,7 @@ public final class WebSocketEngine {
         mutex.unlock()
     }
 
-    func disconnectIfNeeded() {
+    public  func disconnectIfNeeded() {
         mutex.lock()
 
         switch state {
@@ -187,19 +187,19 @@ public final class WebSocketEngine {
 // MARK: Internal
 
 public extension WebSocketEngine {
-    func changeState(_ newState: State) {
+    public  func changeState(_ newState: State) {
         state = newState
     }
 
-    func subscribeToReachabilityStatus() {
+    public  func subscribeToReachabilityStatus() {
         
     }
 
-    func clearReachabilitySubscription() {
+    public  func clearReachabilitySubscription() {
        
     }
 
-    func updateConnectionForRequest(_ request: JSONRPCRequest) {
+    public func updateConnectionForRequest(_ request: JSONRPCRequest) {
         switch state {
         case .connected:
             send(request: request)
@@ -220,12 +220,12 @@ public extension WebSocketEngine {
         }
     }
 
-    func send(request: JSONRPCRequest) {
+    public func send(request: JSONRPCRequest) {
         inProgressRequests[request.requestId] = request
         connection.write(data: request.data, completion: nil)
     }
 
-    func sendAllPendingRequests() {
+    public  func sendAllPendingRequests() {
         let currentPendings = pendingRequests
         pendingRequests = []
 
@@ -236,7 +236,7 @@ public extension WebSocketEngine {
         }
     }
 
-    func resetInProgress() -> [JSONRPCRequest] {
+    public  func resetInProgress() -> [JSONRPCRequest] {
         let idempotentRequests: [JSONRPCRequest] = inProgressRequests.compactMap {
             $1.options.resendOnReconnect ? $1 : nil
         }
@@ -253,7 +253,7 @@ public extension WebSocketEngine {
         return notifiableRequests
     }
 
-    func rescheduleActiveSubscriptions() {
+    public  func rescheduleActiveSubscriptions() {
         let activeSubscriptions = subscriptions.compactMap {
             $1.remoteId != nil ? $1 : nil
         }
@@ -274,7 +274,7 @@ public extension WebSocketEngine {
         pendingRequests.append(contentsOf: subscriptionRequests)
     }
 
-    func process(data: Data) {
+    public  func process(data: Data) {
         do {
             let response = try jsonDecoder.decode(JSONRPCBasicData.self, from: data)
 
@@ -302,11 +302,11 @@ public extension WebSocketEngine {
         }
     }
 
-    func addSubscription(_ subscription: JSONRPCSubscribing) {
+    public func addSubscription(_ subscription: JSONRPCSubscribing) {
         subscriptions[subscription.requestId] = subscription
     }
 
-    func prepareRequest<P: Encodable, T: Decodable>(
+    public  func prepareRequest<P: Encodable, T: Decodable>(
         method: String,
         params: P?,
         options: JSONRPCOptions,
@@ -355,7 +355,7 @@ public extension WebSocketEngine {
         return request
     }
 
-    func generateRequestId() -> UInt16 {
+    public  func generateRequestId() -> UInt16 {
         let items = pendingRequests.map(\.requestId) + inProgressRequests.map(\.key)
         let existingIds: Set<UInt16> = Set(items)
 
@@ -368,7 +368,7 @@ public extension WebSocketEngine {
         return targetId
     }
 
-    func cancelRequestForLocalId(_ identifier: UInt16) {
+    public  func cancelRequestForLocalId(_ identifier: UInt16) {
         if let index = pendingRequests.firstIndex(where: { $0.requestId == identifier }) {
             let request = pendingRequests.remove(at: index)
 
@@ -384,7 +384,7 @@ public extension WebSocketEngine {
         }
     }
 
-    func completeRequestForRemoteId(_ identifier: UInt16, data: Data) {
+    public  func completeRequestForRemoteId(_ identifier: UInt16, data: Data) {
         if let request = inProgressRequests.removeValue(forKey: identifier) {
             notify(request: request, data: data)
         }
@@ -394,7 +394,7 @@ public extension WebSocketEngine {
         }
     }
 
-    func processSubscriptionResponse(_ identifier: UInt16, data: Data) {
+    public func processSubscriptionResponse(_ identifier: UInt16, data: Data) {
         do {
             let response = try jsonDecoder.decode(JSONRPCData<String>.self, from: data)
             subscriptions[identifier]?.remoteId = response.result
@@ -411,7 +411,7 @@ public extension WebSocketEngine {
         }
     }
 
-    func processSubscriptionUpdate(_ data: Data) throws {
+    public func processSubscriptionUpdate(_ data: Data) throws {
         let basicResponse = try jsonDecoder.decode(
             JSONRPCSubscriptionBasicUpdate.self,
             from: data
@@ -430,7 +430,7 @@ public extension WebSocketEngine {
         }
     }
 
-    func completeRequestForRemoteId(_ identifier: UInt16, error: Error) {
+    public func completeRequestForRemoteId(_ identifier: UInt16, error: Error) {
         if let request = inProgressRequests.removeValue(forKey: identifier) {
             notify(requests: [request], error: error)
         }
@@ -440,7 +440,7 @@ public extension WebSocketEngine {
         }
     }
 
-    func processSubscriptionError(_ identifier: UInt16, error: Error, shouldUnsubscribe: Bool) {
+    public func processSubscriptionError(_ identifier: UInt16, error: Error, shouldUnsubscribe: Bool) {
         if let subscription = subscriptions[identifier] {
             if shouldUnsubscribe {
                 subscriptions.removeValue(forKey: identifier)
@@ -452,13 +452,13 @@ public extension WebSocketEngine {
         }
     }
 
-    func notify(request: JSONRPCRequest, data: Data) {
+    public  func notify(request: JSONRPCRequest, data: Data) {
         completionQueue.async {
             request.responseHandler?.handle(data: data)
         }
     }
 
-    func notify(requests: [JSONRPCRequest], error: Error) {
+    public func notify(requests: [JSONRPCRequest], error: Error) {
         guard !requests.isEmpty else {
             return
         }
@@ -470,7 +470,7 @@ public extension WebSocketEngine {
         }
     }
 
-    func scheduleReconnectionOrDisconnect(_ attempt: Int, after error: Error? = nil) {
+    public func scheduleReconnectionOrDisconnect(_ attempt: Int, after error: Error? = nil) {
         if let reconnectionStrategy = reconnectionStrategy,
            let nextDelay = reconnectionStrategy.reconnectAfter(attempt: attempt - 1) {
             state = .waitingReconnection(attempt: attempt)
@@ -491,7 +491,7 @@ public extension WebSocketEngine {
         }
     }
 
-    func schedulePingIfNeeded() {
+    public  func schedulePingIfNeeded() {
         guard pingInterval > 0.0, case .connected = state else {
             return
         }
@@ -501,7 +501,7 @@ public extension WebSocketEngine {
         pingScheduler.notifyAfter(pingInterval)
     }
 
-    func sendPing() {
+    public func sendPing() {
         guard case .connected = state else {
             logger.warning("Tried to send ping but not connected")
             return
@@ -523,7 +523,7 @@ public extension WebSocketEngine {
         }
     }
 
-    func handlePing(result: Result<Health, Error>) {
+    public  func handlePing(result: Result<Health, Error>) {
         switch result {
         case let .success(health):
             if health.isSyncing {
@@ -534,7 +534,7 @@ public extension WebSocketEngine {
         }
     }
 
-    func startConnecting(_ attempt: Int) {
+    public func startConnecting(_ attempt: Int) {
         logger.debug("Start connecting with attempt: \(attempt)")
 
         state = .connecting(attempt: attempt)

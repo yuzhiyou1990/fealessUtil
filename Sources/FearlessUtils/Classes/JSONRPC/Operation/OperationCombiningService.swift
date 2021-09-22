@@ -2,27 +2,27 @@ import Foundation
 import RobinHood
 
 public enum OperationCombiningServiceError: Error {
-    case alreadyRunningOrFinished
+    public  case alreadyRunningOrFinished
 }
 
 public final class OperationCombiningService<T>: Longrunable {
-    enum State {
+    public  enum State {
         case waiting
         case running
         case finished
     }
 
-    typealias ResultType = [T]
+    public typealias ResultType = [T]
 
-    let operationsClosure: () throws -> [CompoundOperationWrapper<T>]
-    let operationManager: OperationManagerProtocol
-    let operationsPerBatch: Int
+    public let operationsClosure: () throws -> [CompoundOperationWrapper<T>]
+    public let operationManager: OperationManagerProtocol
+    public  let operationsPerBatch: Int
 
     private(set) var state: State = .waiting
 
     private var wrappers: [CompoundOperationWrapper<T>]?
 
-    init(
+    public  init(
         operationManager: OperationManagerProtocol,
         operationsPerBatch: Int = 0,
         operationsClosure: @escaping () throws -> [CompoundOperationWrapper<T>]
@@ -32,7 +32,7 @@ public final class OperationCombiningService<T>: Longrunable {
         self.operationsPerBatch = operationsPerBatch
     }
 
-    func start(with completionClosure: @escaping (Result<ResultType, Error>) -> Void) {
+    public func start(with completionClosure: @escaping (Result<ResultType, Error>) -> Void) {
         guard state == .waiting else {
             completionClosure(.failure(OperationCombiningServiceError.alreadyRunningOrFinished))
             return
@@ -82,7 +82,7 @@ public final class OperationCombiningService<T>: Longrunable {
         }
     }
 
-    func cancel() {
+    public func cancel() {
         if state == .running {
             wrappers?.forEach { $0.cancel() }
             wrappers = nil
@@ -93,7 +93,7 @@ public final class OperationCombiningService<T>: Longrunable {
 }
 
 public extension OperationCombiningService {
-    func longrunOperation() -> LongrunOperation<[T]> {
+    public func longrunOperation() -> LongrunOperation<[T]> {
         LongrunOperation(longrun: AnyLongrun(longrun: self))
     }
 }

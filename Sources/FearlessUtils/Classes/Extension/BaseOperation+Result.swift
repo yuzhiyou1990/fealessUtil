@@ -2,19 +2,19 @@ import Foundation
 import RobinHood
 
 public extension BaseOperation {
-    static func createWithError(_ error: Error) -> BaseOperation<ResultType> {
+    public static func createWithError(_ error: Error) -> BaseOperation<ResultType> {
         let operation = BaseOperation<ResultType>()
         operation.result = .failure(error)
         return operation
     }
 
-    static func createWithResult(_ result: ResultType) -> BaseOperation<ResultType> {
+    public static func createWithResult(_ result: ResultType) -> BaseOperation<ResultType> {
         let operation = BaseOperation<ResultType>()
         operation.result = .success(result)
         return operation
     }
 
-    func extractNoCancellableResultData() throws -> ResultType {
+    public  func extractNoCancellableResultData() throws -> ResultType {
         try extractResultData(throwing: BaseOperationError.parentOperationCancelled)
     }
 }

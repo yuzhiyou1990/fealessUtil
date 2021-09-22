@@ -1,10 +1,10 @@
 import Foundation
 
 public struct SubstrateChain {
-    enum ChainNetError {
+    public enum ChainNetError {
         case genesisHashError
     }
-    var genesisHash: String
-    var chainName: String
+    public var genesisHash: String
+    public var chainName: String
    
 } 

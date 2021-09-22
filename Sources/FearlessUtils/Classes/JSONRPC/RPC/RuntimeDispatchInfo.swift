@@ -1,13 +1,13 @@
 import Foundation
 
 public struct RuntimeDispatchInfo: Codable {
-    enum CodingKeys: String, CodingKey {
+    public  enum CodingKeys: String, CodingKey {
         case dispatchClass = "class"
         case fee = "partialFee"
         case weight
     }
 
-    let dispatchClass: String
-    let fee: String
-    let weight: UInt64
+    public let dispatchClass: String
+    public let fee: String
+    public let weight: UInt64
 }

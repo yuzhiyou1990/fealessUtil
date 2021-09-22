@@ -8,23 +8,23 @@ public enum JSONRPCEngineError: Error {
 }
 
 public protocol JSONRPCResponseHandling {
-    func handle(data: Data)
-    func handle(error: Error)
+    public func handle(data: Data)
+    public func handle(error: Error)
 }
 
 public struct JSONRPCRequest: Equatable {
-    let requestId: UInt16
-    let data: Data
-    let options: JSONRPCOptions
-    let responseHandler: JSONRPCResponseHandling?
+    public let requestId: UInt16
+    public let data: Data
+    public let options: JSONRPCOptions
+    public let responseHandler: JSONRPCResponseHandling?
 
-    static func == (lhs: Self, rhs: Self) -> Bool { lhs.requestId == rhs.requestId }
+    public static func == (lhs: Self, rhs: Self) -> Bool { lhs.requestId == rhs.requestId }
 }
 
 public struct JSONRPCResponseHandler<T: Decodable>: JSONRPCResponseHandling {
-    let completionClosure: (Result<T, Error>) -> Void
+    public let completionClosure: (Result<T, Error>) -> Void
 
-    func handle(data: Data) {
+    public func handle(data: Data) {
         do {
             let decoder = JSONDecoder()
             let response = try decoder.decode(JSONRPCData<T>.self, from: data)
@@ -36,41 +36,41 @@ public struct JSONRPCResponseHandler<T: Decodable>: JSONRPCResponseHandling {
         }
     }
 
-    func handle(error: Error) {
+    public func handle(error: Error) {
         completionClosure(.failure(error))
     }
 }
 
 public struct JSONRPCOptions {
-    let resendOnReconnect: Bool
+    public let resendOnReconnect: Bool
 
-    init(resendOnReconnect: Bool = true) {
+    public  init(resendOnReconnect: Bool = true) {
         self.resendOnReconnect = resendOnReconnect
     }
 }
 
 public protocol JSONRPCSubscribing: AnyObject {
-    var requestId: UInt16 { get }
-    var requestData: Data { get }
-    var requestOptions: JSONRPCOptions { get }
-    var remoteId: String? { get set }
+    public var requestId: UInt16 { get }
+    public var requestData: Data { get }
+    public var requestOptions: JSONRPCOptions { get }
+    public var remoteId: String? { get set }
 
-    func handle(data: Data) throws
-    func handle(error: Error, unsubscribed: Bool)
+    public func handle(data: Data) throws
+    public func handle(error: Error, unsubscribed: Bool)
 }
 
 public final class JSONRPCSubscription<T: Decodable>: JSONRPCSubscribing {
-    let requestId: UInt16
-    let requestData: Data
-    let requestOptions: JSONRPCOptions
-    var remoteId: String?
+    public let requestId: UInt16
+    public let requestData: Data
+    public let requestOptions: JSONRPCOptions
+    public var remoteId: String?
 
     private lazy var jsonDecoder = JSONDecoder()
 
-    let updateClosure: (T) -> Void
-    let failureClosure: (Error, Bool) -> Void
+    public let updateClosure: (T) -> Void
+    public let failureClosure: (Error, Bool) -> Void
 
-    init(
+    public  init(
         requestId: UInt16,
         requestData: Data,
         requestOptions: JSONRPCOptions,
@@ -84,25 +84,25 @@ public final class JSONRPCSubscription<T: Decodable>: JSONRPCSubscribing {
         self.failureClosure = failureClosure
     }
 
-    func handle(data: Data) throws {
+    public func handle(data: Data) throws {
         let entity = try jsonDecoder.decode(T.self, from: data)
         updateClosure(entity)
     }
 
-    func handle(error: Error, unsubscribed: Bool) {
+    public  func handle(error: Error, unsubscribed: Bool) {
         failureClosure(error, unsubscribed)
     }
 }
 
 public protocol JSONRPCEngine: AnyObject {
-    func callMethod<P: Encodable, T: Decodable>(
+    public func callMethod<P: Encodable, T: Decodable>(
         _ method: String,
         params: P?,
         options: JSONRPCOptions,
         completion closure: ((Result<T, Error>) -> Void)?
     ) throws -> UInt16
 
-    func subscribe<P: Encodable, T: Decodable>(
+    public  func subscribe<P: Encodable, T: Decodable>(
         _ method: String,
         params: P?,
         updateClosure: @escaping (T) -> Void,
@@ -114,7 +114,7 @@ public protocol JSONRPCEngine: AnyObject {
 }
 
 public extension JSONRPCEngine {
-    func callMethod<P: Encodable, T: Decodable>(
+    public func callMethod<P: Encodable, T: Decodable>(
         _ method: String,
         params: P?,
         completion closure: ((Result<T, Error>) -> Void)?

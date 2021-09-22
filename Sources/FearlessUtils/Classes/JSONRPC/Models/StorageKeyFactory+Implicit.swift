@@ -8,14 +8,14 @@
 import Foundation
 
 public extension StorageKeyFactoryProtocol {
-    func updatedDualRefCount() throws -> Data {
+    public func updatedDualRefCount() throws -> Data {
         try createStorageKey(
             moduleName: "System",
             storageName: "UpgradedToDualRefCount"
         )
     }
 
-    func accountInfoKeyForId(_ identifier: Data) throws -> Data {
+    public func accountInfoKeyForId(_ identifier: Data) throws -> Data {
         try createStorageKey(
             moduleName: "System",
             storageName: "Account",
@@ -24,7 +24,7 @@ public extension StorageKeyFactoryProtocol {
         )
     }
     //statemine
-    func accountAsset(_ assetId: Data,_ identifier: Data) throws -> Data {
+    public   func accountAsset(_ assetId: Data,_ identifier: Data) throws -> Data {
         try createStorageKey(
             moduleName: "Assets",
             storageName: "Account",
@@ -34,7 +34,7 @@ public extension StorageKeyFactoryProtocol {
             hasher2: .blake128Concat)
     }
     //karura
-    func karuraAccountAsset(_ identifier: Data,_ currentId: Data) throws -> Data {
+    public  func karuraAccountAsset(_ identifier: Data,_ currentId: Data) throws -> Data {
         try createStorageKey(
             moduleName: "Tokens",
             storageName: "Accounts",
@@ -43,7 +43,7 @@ public extension StorageKeyFactoryProtocol {
             key2: currentId,
             hasher2: .twox64Concat)
     }
-    func bondedKeyForId(_ identifier: Data) throws -> Data {
+    public  func bondedKeyForId(_ identifier: Data) throws -> Data {
         try createStorageKey(
             moduleName: "Staking",
             storageName: "Bonded",
@@ -52,7 +52,7 @@ public extension StorageKeyFactoryProtocol {
         )
     }
 
-    func stakingInfoForControllerId(_ identifier: Data) throws -> Data {
+    public  func stakingInfoForControllerId(_ identifier: Data) throws -> Data {
         try createStorageKey(
             moduleName: "Staking",
             storageName: "Ledger",
@@ -61,35 +61,35 @@ public extension StorageKeyFactoryProtocol {
         )
     }
 
-    func activeEra() throws -> Data {
+    public func activeEra() throws -> Data {
         try createStorageKey(
             moduleName: "Staking",
             storageName: "ActiveEra"
         )
     }
 
-    func currentEra() throws -> Data {
+    public func currentEra() throws -> Data {
         try createStorageKey(
             moduleName: "Staking",
             storageName: "CurrentEra"
         )
     }
 
-    func totalIssuance() throws -> Data {
+    public func totalIssuance() throws -> Data {
         try createStorageKey(
             moduleName: "Balances",
             storageName: "TotalIssuance"
         )
     }
 
-    func historyDepth() throws -> Data {
+    public func historyDepth() throws -> Data {
         try createStorageKey(
             moduleName: "Staking",
             storageName: "HistoryDepth"
         )
     }
 
-    func key(from codingPath: StorageCodingPath) throws -> Data {
+    public func key(from codingPath: StorageCodingPath) throws -> Data {
         try createStorageKey(moduleName: codingPath.moduleName, storageName: codingPath.itemName)
     }
  }

@@ -1,17 +1,17 @@
 import Foundation
 
 public struct PagedKeysRequest: Encodable {
-    let key: String
-    let count: UInt32
-    let offset: String?
+    public  let key: String
+    public let count: UInt32
+    public let offset: String?
 
-    init(key: String, count: UInt32 = 1000, offset: String? = nil) {
+    public init(key: String, count: UInt32 = 1000, offset: String? = nil) {
         self.key = key
         self.count = count
         self.offset = offset
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.unkeyedContainer()
         try container.encode(key)
         try container.encode(count)

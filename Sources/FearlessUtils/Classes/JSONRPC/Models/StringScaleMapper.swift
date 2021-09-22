@@ -1,13 +1,13 @@
 import Foundation
 
 public struct StringScaleMapper<T: LosslessStringConvertible & Equatable>: Codable, Equatable {
-    let value: T
+    public  let value: T
 
-    init(value: T) {
+    public  init(value: T) {
         self.value = value
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
 
         let strValue = try container.decode(String.self)
@@ -22,7 +22,7 @@ public struct StringScaleMapper<T: LosslessStringConvertible & Equatable>: Codab
         value = convertedValue
     }
 
-    func encode(to encoder: Encoder) throws {
+    public  func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(String(value))
     }

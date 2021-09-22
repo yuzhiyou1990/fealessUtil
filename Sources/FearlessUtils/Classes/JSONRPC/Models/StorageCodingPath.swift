@@ -8,120 +8,120 @@
 import Foundation
 
 public struct StorageCodingPath: Equatable {
-    let moduleName: String
-    let itemName: String
+    public  let moduleName: String
+    public  let itemName: String
 }
 
 public extension StorageCodingPath {
-    static var account: StorageCodingPath {
+    public  static var account: StorageCodingPath {
         StorageCodingPath(moduleName: "System", itemName: "Account")
     }
 
-    static var events: StorageCodingPath {
+    public   static var events: StorageCodingPath {
         StorageCodingPath(moduleName: "System", itemName: "Events")
     }
 
-    static var activeEra: StorageCodingPath {
+    public  static var activeEra: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "ActiveEra")
     }
 
-    static var currentEra: StorageCodingPath {
+    public  static var currentEra: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "CurrentEra")
     }
 
-    static var erasStakers: StorageCodingPath {
+    public  static var erasStakers: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "ErasStakers")
     }
 
-    static var erasPrefs: StorageCodingPath {
+    public  static var erasPrefs: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "ErasValidatorPrefs")
     }
 
-    static var controller: StorageCodingPath {
+    public  static var controller: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "Bonded")
     }
 
-    static var stakingLedger: StorageCodingPath {
+    public  static var stakingLedger: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "Ledger")
     }
 
-    static var nominators: StorageCodingPath {
+    public   static var nominators: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "Nominators")
     }
 
-    static var validatorPrefs: StorageCodingPath {
+    public  static var validatorPrefs: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "Validators")
     }
 
-    static var totalIssuance: StorageCodingPath {
+    public  static var totalIssuance: StorageCodingPath {
         StorageCodingPath(moduleName: "Balances", itemName: "TotalIssuance")
     }
 
-    static var identity: StorageCodingPath {
+    public static var identity: StorageCodingPath {
         StorageCodingPath(moduleName: "Identity", itemName: "IdentityOf")
     }
 
-    static var superIdentity: StorageCodingPath {
+    public  static var superIdentity: StorageCodingPath {
         StorageCodingPath(moduleName: "Identity", itemName: "SuperOf")
     }
 
-    static var slashingSpans: StorageCodingPath {
+    public static var slashingSpans: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "SlashingSpans")
     }
 
-    static var unappliedSlashes: StorageCodingPath {
+    public static var unappliedSlashes: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "UnappliedSlashes")
     }
 
-    static var minNominatorBond: StorageCodingPath {
+    public  static var minNominatorBond: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "MinNominatorBond")
     }
 
-    static var counterForNominators: StorageCodingPath {
+    public  static var counterForNominators: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "CounterForNominators")
     }
 
-    static var maxNominatorsCount: StorageCodingPath {
+    public  static var maxNominatorsCount: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "MaxNominatorsCount")
     }
 
-    static var payee: StorageCodingPath {
+    public static var payee: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "Payee")
     }
 
-    static var historyDepth: StorageCodingPath {
+    public static var historyDepth: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "HistoryDepth")
     }
 
-    static var totalValidatorReward: StorageCodingPath {
+    public static var totalValidatorReward: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "ErasValidatorReward")
     }
 
-    static var rewardPointsPerValidator: StorageCodingPath {
+    public static var rewardPointsPerValidator: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "ErasRewardPoints")
     }
 
-    static var validatorExposureClipped: StorageCodingPath {
+    public static var validatorExposureClipped: StorageCodingPath {
         StorageCodingPath(moduleName: "Staking", itemName: "ErasStakersClipped")
     }
 
-    static var electionPhase: StorageCodingPath {
+    public  static var electionPhase: StorageCodingPath {
         StorageCodingPath(moduleName: "ElectionProviderMultiPhase", itemName: "CurrentPhase")
     }
 
-    static var parachains: StorageCodingPath {
+    public static var parachains: StorageCodingPath {
         StorageCodingPath(moduleName: "Paras", itemName: "Parachains")
     }
 
-    static var parachainSlotLeases: StorageCodingPath {
+    public  static var parachainSlotLeases: StorageCodingPath {
         StorageCodingPath(moduleName: "Slots", itemName: "Leases")
     }
 
-    static var crowdloanFunds: StorageCodingPath {
+    public static var crowdloanFunds: StorageCodingPath {
         StorageCodingPath(moduleName: "Crowdloan", itemName: "Funds")
     }
 
-    static var blockNumber: StorageCodingPath {
+    public  static var blockNumber: StorageCodingPath {
         StorageCodingPath(moduleName: "System", itemName: "Number")
     }
 }

@@ -6,11 +6,11 @@ public enum JSONRPCOperationError: Error {
 }
 
 public class JSONRPCOperation<P: Encodable, T: Decodable>: BaseOperation<T> {
-    let engine: JSONRPCEngine
+    public let engine: JSONRPCEngine
     private(set) var requestId: UInt16?
-    let method: String
-    var parameters: P?
-    let timeout: Int
+    public let method: String
+    public var parameters: P?
+    public let timeout: Int
 
     public init(engine: JSONRPCEngine, method: String, parameters: P? = nil, timeout: Int = 10) {
         self.engine = engine

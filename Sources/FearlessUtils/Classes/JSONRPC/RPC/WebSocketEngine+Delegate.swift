@@ -34,25 +34,25 @@ public extension WebSocketEngine: WebSocketDelegate {
 //        }
 //        mutex.unlock()
 //    }
-    func websocketDidConnect(socket: WebSocketClient) {
+    public   func websocketDidConnect(socket: WebSocketClient) {
         mutex.lock()
         handleConnectedEvent()
         mutex.unlock()
     }
     
-    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+    public  func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         mutex.lock()
         handleDisconnectedEvent(error: error)
         mutex.unlock()
     }
     
-    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
+    public  func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         mutex.lock()
         handleTextEvent(string: text)
         mutex.unlock()
     }
     
-    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
+    public  func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         mutex.lock()
         handleBinaryEvent(data: data)
         mutex.unlock()
@@ -165,7 +165,7 @@ public extension WebSocketEngine: WebSocketDelegate {
 }
 
 public extension WebSocketEngine: SchedulerDelegate {
-    func didTrigger(scheduler: SchedulerProtocol) {
+    public func didTrigger(scheduler: SchedulerProtocol) {
         mutex.lock()
 
         if scheduler === pingScheduler {

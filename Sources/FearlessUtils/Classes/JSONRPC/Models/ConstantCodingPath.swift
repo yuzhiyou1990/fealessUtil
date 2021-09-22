@@ -1,36 +1,36 @@
 import Foundation
 
 public struct ConstantCodingPath {
-    let moduleName: String
-    let constantName: String
+    public let moduleName: String
+    public  let constantName: String
 }
 
 public extension ConstantCodingPath {
-    static var slashDeferDuration: ConstantCodingPath {
+    public static var slashDeferDuration: ConstantCodingPath {
         ConstantCodingPath(moduleName: "Staking", constantName: "SlashDeferDuration")
     }
 
-    static var maxNominatorRewardedPerValidator: ConstantCodingPath {
+    public static var maxNominatorRewardedPerValidator: ConstantCodingPath {
         ConstantCodingPath(moduleName: "Staking", constantName: "MaxNominatorRewardedPerValidator")
     }
 
-    static var lockUpPeriod: ConstantCodingPath {
+    public  static var lockUpPeriod: ConstantCodingPath {
         ConstantCodingPath(moduleName: "Staking", constantName: "BondingDuration")
     }
 
-    static var existentialDeposit: ConstantCodingPath {
+    public static var existentialDeposit: ConstantCodingPath {
         ConstantCodingPath(moduleName: "Balances", constantName: "ExistentialDeposit")
     }
 
-    static var paraLeasingPeriod: ConstantCodingPath {
+    public static var paraLeasingPeriod: ConstantCodingPath {
         ConstantCodingPath(moduleName: "Slots", constantName: "LeasePeriod")
     }
 
-    static var babeBlockTime: ConstantCodingPath {
+    public static var babeBlockTime: ConstantCodingPath {
         ConstantCodingPath(moduleName: "Babe", constantName: "ExpectedBlockTime")
     }
 
-    static var minimumContribution: ConstantCodingPath {
+    public static var minimumContribution: ConstantCodingPath {
         ConstantCodingPath(moduleName: "Crowdloan", constantName: "MinContribution")
     }
 }

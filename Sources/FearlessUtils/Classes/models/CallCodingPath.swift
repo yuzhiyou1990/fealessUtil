@@ -7,8 +7,8 @@
 
 import Foundation
 public struct CallCodingPath: Equatable, Codable {
-    let moduleName: String
-    let callName: String
+    public let moduleName: String
+    public let callName: String
 }
 
 public extension CallCodingPath {

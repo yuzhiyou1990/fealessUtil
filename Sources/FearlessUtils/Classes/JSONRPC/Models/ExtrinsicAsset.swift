@@ -2,32 +2,32 @@ import Foundation
 import BigInt
 
 public struct ExtrinsicAssetConstants {
-    static let signedExtrinsicInitialVersion: UInt8 = 128
-    static let accountIdLength: UInt8 = 32
+    public static let signedExtrinsicInitialVersion: UInt8 = 128
+    public static let accountIdLength: UInt8 = 32
 }
 
 public struct Call {
-    let moduleIndex: UInt8
-    let callIndex: UInt8
-    let arguments: Data?
+    public let moduleIndex: UInt8
+    public let callIndex: UInt8
+    public let arguments: Data?
 }
 
 public enum ExtrinsicCodingError: Error {
-    case unsupportedSignatureVersion
+    public case unsupportedSignatureVersion
 }
 
 public struct ExtrinsicAsset: ScaleCodable {
-    let version: UInt8
-    let transaction: ExtrinsicTransaction?
+    public let version: UInt8
+    public  let transaction: ExtrinsicTransaction?
     let call: Call
-
-    init(version: UInt8, transaction: ExtrinsicTransaction?, call: Call) {
+    public
+    public  init(version: UInt8, transaction: ExtrinsicTransaction?, call: Call) {
         self.version = version
         self.transaction = transaction
         self.call = call
     }
 
-    init(scaleDecoder: ScaleDecoding) throws {
+    public init(scaleDecoder: ScaleDecoding) throws {
         let lengthValue = try BigUInt(scaleDecoder: scaleDecoder)
         let extrinsicLength = Int(lengthValue)
 
@@ -58,7 +58,7 @@ public struct ExtrinsicAsset: ScaleCodable {
         call = Call(moduleIndex: moduleIndex, callIndex: callIndex, arguments: arguments)
     }
 
-    func encode(scaleEncoder: ScaleEncoding) throws {
+    public func encode(scaleEncoder: ScaleEncoding) throws {
         let internalEncoder = ScaleEncoder()
         try version.encode(scaleEncoder: internalEncoder)
         try transaction?.encode(scaleEncoder: internalEncoder)
@@ -78,14 +78,14 @@ public struct ExtrinsicAsset: ScaleCodable {
 }
 
 public struct ExtrinsicTransaction: ScaleCodable {
-    let accountId: Data
-    let signatureVersion: UInt8
-    let signature: Data
-    let era: Era
-    let nonce: UInt32
-    let tip: BigUInt
+    public let accountId: Data
+    public  let signatureVersion: UInt8
+    public  let signature: Data
+    public let era: Era
+    public let nonce: UInt32
+    public  let tip: BigUInt
 
-    init(accountId: Data,
+    public init(accountId: Data,
          signatureVersion: UInt8,
          signature: Data,
          era: Era,
@@ -99,7 +99,7 @@ public struct ExtrinsicTransaction: ScaleCodable {
         self.tip = tip
     }
 
-    init(scaleDecoder: ScaleDecoding) throws {
+    public init(scaleDecoder: ScaleDecoding) throws {
         accountId = try scaleDecoder.readAndConfirm(count: Int(ExtrinsicAssetConstants.accountIdLength))
         signatureVersion = try UInt8(scaleDecoder: scaleDecoder)
 
@@ -117,7 +117,7 @@ public struct ExtrinsicTransaction: ScaleCodable {
         tip = try BigUInt(scaleDecoder: scaleDecoder)
     }
 
-    func encode(scaleEncoder: ScaleEncoding) throws {
+    public func encode(scaleEncoder: ScaleEncoding) throws {
         scaleEncoder.appendRaw(data:try! Data(hexString: "0x00") )
         scaleEncoder.appendRaw(data: accountId)
         try signatureVersion.encode(scaleEncoder: scaleEncoder)
@@ -129,16 +129,16 @@ public struct ExtrinsicTransaction: ScaleCodable {
 }
 
 public struct ExtrinsicPayload: ScaleEncodable {
-    let call: Call
-    let era: Era
-    let nonce: UInt32
-    let tip: BigUInt
-    let specVersion: UInt32
-    let transactionVersion: UInt32
-    let genesisHash: Data
-    let blockHash: Data
+    public let call: Call
+    public let era: Era
+    public let nonce: UInt32
+    public let tip: BigUInt
+    public let specVersion: UInt32
+    public let transactionVersion: UInt32
+    public let genesisHash: Data
+    public let blockHash: Data
 
-    func encode(scaleEncoder: ScaleEncoding) throws {
+    public func encode(scaleEncoder: ScaleEncoding) throws {
         try call.moduleIndex.encode(scaleEncoder: scaleEncoder)
         try call.callIndex.encode(scaleEncoder: scaleEncoder)
 

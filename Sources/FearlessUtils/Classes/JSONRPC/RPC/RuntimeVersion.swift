@@ -1,6 +1,6 @@
 import Foundation
 
 public struct RuntimeVersion: Codable {
-    let specVersion: UInt32
-    let transactionVersion: UInt32
+    public let specVersion: UInt32
+    public let transactionVersion: UInt32
 }

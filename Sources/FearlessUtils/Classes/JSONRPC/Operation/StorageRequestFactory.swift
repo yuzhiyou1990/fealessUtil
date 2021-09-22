@@ -3,20 +3,20 @@ import RobinHood
 
 
 public struct StorageResponse<T: Decodable> {
-    let key: Data
-    let data: Data?
-    let value: T?
+    public  let key: Data
+    public  let data: Data?
+    public  let value: T?
 }
 
 public struct ChildStorageResponse<T: Decodable> {
-    let storageKey: Data
-    let childKey: Data
-    let data: Data?
-    let value: T?
+    public let storageKey: Data
+    public let childKey: Data
+    public  let data: Data?
+    public let value: T?
 }
 
 public protocol StorageRequestFactoryProtocol {
-    func queryItems<K, T>(
+    public  func queryItems<K, T>(
         engine: JSONRPCEngine,
         keyParams: @escaping () throws -> [K],
         factory: @escaping () throws -> RuntimeCoderFactoryProtocol,
@@ -25,7 +25,7 @@ public protocol StorageRequestFactoryProtocol {
     )
         -> CompoundOperationWrapper<[StorageResponse<T>]> where K: Encodable, T: Decodable
 
-    func queryItems<K1, K2, T>(
+    public  func queryItems<K1, K2, T>(
         engine: JSONRPCEngine,
         keyParams1: @escaping () throws -> [K1],
         keyParams2: @escaping () throws -> [K2],
@@ -35,7 +35,7 @@ public protocol StorageRequestFactoryProtocol {
     )
         -> CompoundOperationWrapper<[StorageResponse<T>]> where K1: Encodable, K2: Encodable, T: Decodable
 
-    func queryItems<T>(
+    public  func queryItems<T>(
         engine: JSONRPCEngine,
         keys: @escaping () throws -> [Data],
         factory: @escaping () throws -> RuntimeCoderFactoryProtocol,
@@ -44,7 +44,7 @@ public protocol StorageRequestFactoryProtocol {
     )
         -> CompoundOperationWrapper<[StorageResponse<T>]> where T: Decodable
 
-    func queryChildItem<T>(
+    public func queryChildItem<T>(
         engine: JSONRPCEngine,
         storageKeyParam: @escaping () throws -> Data,
         childKeyParam: @escaping () throws -> Data,
@@ -55,10 +55,10 @@ public protocol StorageRequestFactoryProtocol {
 }
 
 public final class StorageRequestFactory: StorageRequestFactoryProtocol {
-    let remoteFactory: StorageKeyFactoryProtocol
-    let operationManager: OperationManagerProtocol
+    public let remoteFactory: StorageKeyFactoryProtocol
+    public  let operationManager: OperationManagerProtocol
 
-    init(remoteFactory: StorageKeyFactoryProtocol, operationManager: OperationManagerProtocol) {
+    public  init(remoteFactory: StorageKeyFactoryProtocol, operationManager: OperationManagerProtocol) {
         self.remoteFactory = remoteFactory
         self.operationManager = operationManager
     }
@@ -147,7 +147,7 @@ public final class StorageRequestFactory: StorageRequestFactoryProtocol {
         }.longrunOperation()
     }
 
-    func queryItems<T>(
+    public  func queryItems<T>(
         engine: JSONRPCEngine,
         keys: @escaping () throws -> [Data],
         factory: @escaping () throws -> RuntimeCoderFactoryProtocol,
@@ -189,7 +189,7 @@ public final class StorageRequestFactory: StorageRequestFactoryProtocol {
         )
     }
 
-    func queryItems<K, T>(
+    public  func queryItems<K, T>(
         engine: JSONRPCEngine,
         keyParams: @escaping () throws -> [K],
         factory: @escaping () throws -> RuntimeCoderFactoryProtocol,
@@ -227,7 +227,7 @@ public final class StorageRequestFactory: StorageRequestFactoryProtocol {
         )
     }
 
-    func queryItems<K1, K2, T>(
+    public  func queryItems<K1, K2, T>(
         engine: JSONRPCEngine,
         keyParams1: @escaping () throws -> [K1],
         keyParams2: @escaping () throws -> [K2],
@@ -264,7 +264,7 @@ public final class StorageRequestFactory: StorageRequestFactoryProtocol {
         )
     }
 
-    func queryChildItem<T>(
+    public  func queryChildItem<T>(
         engine: JSONRPCEngine,
         storageKeyParam: @escaping () throws -> Data,
         childKeyParam: @escaping () throws -> Data,
@@ -312,7 +312,7 @@ public final class StorageRequestFactory: StorageRequestFactoryProtocol {
 }
 
 public extension StorageRequestFactoryProtocol {
-    func queryItems<K, T>(
+    public  func queryItems<K, T>(
         engine: JSONRPCEngine,
         keyParams: @escaping () throws -> [K],
         factory: @escaping () throws -> RuntimeCoderFactoryProtocol,
@@ -327,7 +327,7 @@ public extension StorageRequestFactoryProtocol {
         )
     }
 
-    func queryItems<K1, K2, T>(
+    public func queryItems<K1, K2, T>(
         engine: JSONRPCEngine,
         keyParams1: @escaping () throws -> [K1],
         keyParams2: @escaping () throws -> [K2],
@@ -344,7 +344,7 @@ public extension StorageRequestFactoryProtocol {
         )
     }
 
-    func queryItems<T>(
+    public  func queryItems<T>(
         engine: JSONRPCEngine,
         keys: @escaping () throws -> [Data],
         factory: @escaping () throws -> RuntimeCoderFactoryProtocol,
@@ -359,7 +359,7 @@ public extension StorageRequestFactoryProtocol {
         )
     }
 
-    func queryChildItem<T>(
+    public func queryChildItem<T>(
         engine: JSONRPCEngine,
         storageKeyParam: @escaping () throws -> Data,
         childKeyParam: @escaping () throws -> Data,
