@@ -8,7 +8,7 @@ public class LongrunOperation<T>: BaseOperation<T> {
         self.longrun = longrun
     }
 
-    override func main() {
+    public override func main() {
         super.main()
 
         if isCancelled {
@@ -38,7 +38,7 @@ public class LongrunOperation<T>: BaseOperation<T> {
         result = longrunResult
     }
 
-    override func cancel() {
+    public override func cancel() {
         super.cancel()
 
         longrun.cancel()

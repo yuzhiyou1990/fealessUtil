@@ -6,7 +6,7 @@ public protocol WebSocketConnectionProtocol: WebSocketClient {
       var delegate: WebSocketDelegate? { get set }
 }
 
-public extension WebSocket: WebSocketConnectionProtocol {}
+extension WebSocket: WebSocketConnectionProtocol {}
 
 public protocol WebSocketEngineDelegate: AnyObject {
      func webSocketDidChangeState(

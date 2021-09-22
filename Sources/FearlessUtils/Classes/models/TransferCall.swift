@@ -4,7 +4,7 @@ import BigInt
 
 public struct TransferCall: Codable {
     public  let dest: MultiAddress
-    public @StringCodable var value: BigUInt
+    @StringCodable public var value: BigUInt
 }
 public struct AssetTransferCall: ScaleCodable {
     public let receiver: Data

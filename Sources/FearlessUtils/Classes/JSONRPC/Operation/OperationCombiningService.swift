@@ -2,7 +2,7 @@ import Foundation
 import RobinHood
 
 public enum OperationCombiningServiceError: Error {
-    public  case alreadyRunningOrFinished
+    case alreadyRunningOrFinished
 }
 
 public final class OperationCombiningService<T>: Longrunable {
@@ -93,7 +93,7 @@ public final class OperationCombiningService<T>: Longrunable {
 }
 
 public extension OperationCombiningService {
-    public func longrunOperation() -> LongrunOperation<[T]> {
+    func longrunOperation() -> LongrunOperation<[T]> {
         LongrunOperation(longrun: AnyLongrun(longrun: self))
     }
 }

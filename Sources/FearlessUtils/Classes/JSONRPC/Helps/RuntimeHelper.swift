@@ -1,9 +1,9 @@
 import Foundation
 
 public enum RuntimeHelperError: Error {
-    public  case invalidCatalogBaseName
-    public  case invalidCatalogNetworkName
-    public case invalidCatalogMetadataName
+    case invalidCatalogBaseName
+    case invalidCatalogNetworkName
+    case invalidCatalogMetadataName
 }
 
 public final class RuntimeHelper {

@@ -21,7 +21,7 @@ public class JSONRPCOperation<P: Encodable, T: Decodable>: BaseOperation<T> {
         super.init()
     }
 
-    override func main() {
+    public override func main() {
         super.main()
 
         if isCancelled {
@@ -73,7 +73,7 @@ public class JSONRPCOperation<P: Encodable, T: Decodable>: BaseOperation<T> {
         }
     }
 
-    override func cancel() {
+    public override func cancel() {
         if let requestId = requestId {
             engine.cancelForIdentifier(requestId)
         }

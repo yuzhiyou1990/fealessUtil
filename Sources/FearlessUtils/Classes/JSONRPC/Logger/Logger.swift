@@ -10,23 +10,23 @@ public protocol LoggerProtocol {
 }
 
 public extension LoggerProtocol {
-    public  func verbose(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
+    func verbose(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
         verbose(message: message, file: file, function: function, line: line)
     }
 
-    public  func debug(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
+      func debug(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
         debug(message: message, file: file, function: function, line: line)
     }
 
-    public  func info(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
+      func info(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
         info(message: message, file: file, function: function, line: line)
     }
 
-    public func warning(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
+     func warning(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
         warning(message: message, file: file, function: function, line: line)
     }
 
-    public func error(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
+     func error(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
         error(message: message, file: file, function: function, line: line)
     }
 }
@@ -65,7 +65,7 @@ public final class Logger {
     }
 }
 
-public extension Logger: LoggerProtocol {
+ extension Logger: LoggerProtocol {
     public  func verbose(message: String, file: String, function: String, line: Int) {
         log.custom(
             level: .verbose,

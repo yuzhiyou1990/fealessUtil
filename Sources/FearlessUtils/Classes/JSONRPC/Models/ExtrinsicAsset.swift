@@ -13,14 +13,13 @@ public struct Call {
 }
 
 public enum ExtrinsicCodingError: Error {
-    public case unsupportedSignatureVersion
+    case unsupportedSignatureVersion
 }
 
 public struct ExtrinsicAsset: ScaleCodable {
     public let version: UInt8
     public  let transaction: ExtrinsicTransaction?
-    let call: Call
-    public
+    public  let call: Call
     public  init(version: UInt8, transaction: ExtrinsicTransaction?, call: Call) {
         self.version = version
         self.transaction = transaction

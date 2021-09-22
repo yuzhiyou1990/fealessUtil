@@ -8,21 +8,21 @@ public protocol Longrunable {
 }
 
 public final class AnyLongrun<T>: Longrunable {
-    typealias ResultType = T
+    public typealias ResultType = T
 
     private let privateStart: (@escaping (Result<ResultType, Error>) -> Void) -> Void
     private let privateCancel: () -> Void
 
-    init<U: Longrunable>(longrun: U) where U.ResultType == ResultType {
+    public init<U: Longrunable>(longrun: U) where U.ResultType == ResultType {
         privateStart = longrun.start
         privateCancel = longrun.cancel
     }
 
-    func start(with completionClosure: @escaping (Result<T, Error>) -> Void) {
+    public func start(with completionClosure: @escaping (Result<T, Error>) -> Void) {
         privateStart(completionClosure)
     }
 
-    func cancel() {
+    public func cancel() {
         privateCancel()
     }
 }

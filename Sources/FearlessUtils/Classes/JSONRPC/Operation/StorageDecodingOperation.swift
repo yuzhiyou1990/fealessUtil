@@ -3,8 +3,8 @@ import Foundation
 import RobinHood
 
 public enum StorageDecodingOperationError: Error {
-    public  case missingRequiredParams
-    public case invalidStoragePath
+      case missingRequiredParams
+     case invalidStoragePath
 }
 
 public protocol StorageDecodable {
@@ -12,7 +12,7 @@ public protocol StorageDecodable {
 }
 
 public extension StorageDecodable {
-    public func decode(data: Data, path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON {
+    func decode(data: Data, path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON {
         guard let entry = codingFactory.metadata.getStorageMetadata(
             in: path.moduleName,
             storageName: path.itemName
@@ -26,10 +26,10 @@ public extension StorageDecodable {
 }
 
 public protocol StorageModifierHandling {
-    public func handleModifier(at path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON?
+     func handleModifier(at path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON?
 }
-
-public extension StorageModifierHandling {
+ 
+extension StorageModifierHandling {
     public  func handleModifier(at path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON? {
         guard let entry = codingFactory.metadata.getStorageMetadata(
             in: path.moduleName,
@@ -61,7 +61,7 @@ public final class StorageDecodingOperation<T: Decodable>: BaseOperation<T>, Sto
         super.init()
     }
 
-    override func main() {
+    public override func main() {
         super.main()
 
         if isCancelled {
@@ -99,7 +99,7 @@ public final class StorageFallbackDecodingOperation<T: Decodable>: BaseOperation
         super.init()
     }
 
-    override func main() {
+    public override func main() {
         super.main()
 
         if isCancelled {
@@ -142,7 +142,7 @@ public final class StorageDecodingListOperation<T: Decodable>: BaseOperation<[T]
         super.init()
     }
 
-    override func main() {
+    public override func main() {
         super.main()
 
         if isCancelled {
@@ -183,7 +183,7 @@ public final class StorageFallbackDecodingListOperation<T: Decodable>: BaseOpera
         super.init()
     }
 
-    override func main() {
+    public override func main() {
         super.main()
 
         if isCancelled {
@@ -215,10 +215,10 @@ public final class StorageFallbackDecodingListOperation<T: Decodable>: BaseOpera
 }
 
 public protocol ConstantDecodable {
-    public  func decode(at path: ConstantCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON
+      func decode(at path: ConstantCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON
 }
 
-public extension ConstantDecodable {
+extension ConstantDecodable {
     public func decode(at path: ConstantCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON {
         guard let entry = codingFactory.metadata
             .getConstant(in: path.moduleName, constantName: path.constantName) else {
@@ -241,7 +241,7 @@ public final class StorageConstantOperation<T: Decodable>: BaseOperation<T>, Con
         super.init()
     }
 
-    override func main() {
+    public override func main() {
         super.main()
 
         if isCancelled {
@@ -276,7 +276,7 @@ public final class PrimitiveConstantOperation<T: LosslessStringConvertible & Equ
         super.init()
     }
 
-    override func main() {
+    public override func main() {
         super.main()
 
         if isCancelled {

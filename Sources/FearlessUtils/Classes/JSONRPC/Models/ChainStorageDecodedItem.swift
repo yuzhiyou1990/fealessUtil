@@ -6,4 +6,4 @@ public struct ChainStorageDecodedItem<T: Equatable & Decodable>: Equatable {
     public let item: T?
 }
 
-public extension ChainStorageDecodedItem: Identifiable {}
+extension ChainStorageDecodedItem: Identifiable {}

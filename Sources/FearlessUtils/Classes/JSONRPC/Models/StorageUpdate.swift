@@ -2,8 +2,8 @@ import Foundation
 
 public struct StorageUpdate: Decodable {
     public  enum CodingKeys: String, CodingKey {
-        public case blockHash = "block"
-        public  case changes
+        case blockHash = "block"
+        case changes
     }
 
     public  let blockHash: String?

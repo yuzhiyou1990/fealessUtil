@@ -1,7 +1,7 @@
 import Foundation
 import Starscream
 
-public extension WebSocketEngine: WebSocketDelegate {
+extension WebSocketEngine: WebSocketDelegate {
 //    func didReceive(event: WebSocketEvent, client: WebSocket) {
 //        mutex.lock()
 //        switch event {
@@ -164,7 +164,7 @@ public extension WebSocketEngine: WebSocketDelegate {
     }
 }
 
-public extension WebSocketEngine: SchedulerDelegate {
+extension WebSocketEngine: SchedulerDelegate {
     public func didTrigger(scheduler: SchedulerProtocol) {
         mutex.lock()
 

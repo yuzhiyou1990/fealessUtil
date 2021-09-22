@@ -3,9 +3,9 @@ import Foundation
 import RobinHood
 
 public enum StorageKeyEncodingOperationError: Error {
-    public  case missingRequiredParams
-    public  case incompatibleStorageType
-    public case invalidStoragePath
+    case missingRequiredParams
+    case incompatibleStorageType
+    case invalidStoragePath
 }
 
 public class MapKeyEncodingOperation<T: Encodable>: BaseOperation<[Data]> {
@@ -23,7 +23,7 @@ public class MapKeyEncodingOperation<T: Encodable>: BaseOperation<[Data]> {
         super.init()
     }
 
-    override func main() {
+    public override func main() {
         super.main()
 
         if isCancelled {
@@ -105,7 +105,7 @@ public class DoubleMapKeyEncodingOperation<T1: Encodable, T2: Encodable>: BaseOp
         super.init()
     }
 
-    override func main() {
+    public override func main() {
         super.main()
 
         if isCancelled {
@@ -176,19 +176,19 @@ public class DoubleMapKeyEncodingOperation<T1: Encodable, T2: Encodable>: BaseOp
     }
 }
 
-public extension MapKeyEncodingOperation {
+extension MapKeyEncodingOperation {
     public func localWrapper(for factory: ChainStorageIdFactoryProtocol) -> CompoundOperationWrapper<[String]> {
         baseLocalWrapper(for: factory)
     }
 }
 
-public extension DoubleMapKeyEncodingOperation {
+extension DoubleMapKeyEncodingOperation {
     public  func localWrapper(for factory: ChainStorageIdFactoryProtocol) -> CompoundOperationWrapper<[String]> {
         baseLocalWrapper(for: factory)
     }
 }
 
-private extension BaseOperation where ResultType == [Data] {
+extension BaseOperation where ResultType == [Data] {
     public  func baseLocalWrapper(for factory: ChainStorageIdFactoryProtocol) -> CompoundOperationWrapper<[String]> {
         let mapOperation = ClosureOperation<[String]> {
             let keys = try self.extractNoCancellableResultData()

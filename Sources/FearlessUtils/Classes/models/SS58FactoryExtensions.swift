@@ -2,11 +2,11 @@ import Foundation
 import SS58Factory
 
 public enum SS58AddressFactoryError: Error {
-    public case unexpectedAddress
+     case unexpectedAddress
 }
 
 // Deprecated: better not to use this methods anymore, will be removed when we get rid of SNAddressType
-public extension SS58AddressFactoryProtocol {
+extension SS58AddressFactoryProtocol {
     public  func extractAddressType(from address: String) throws -> UInt8 {
         let addressTypeValue = try type(fromAddress: address)
         return addressTypeValue.uint8Value
