@@ -9,6 +9,10 @@ import Foundation
 public struct CallCodingPath: Equatable, Codable {
     public let moduleName: String
     public let callName: String
+    public init(moduleName: String,callName: String){
+        self.moduleName = moduleName
+        self.callName = callName
+    }
 }
 
 public extension CallCodingPath {
