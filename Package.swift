@@ -15,12 +15,12 @@ let package = Package(
         .package(name: "BigInt", url: "https://github.com/attaswift/BigInt.git", from: "5.2.1"),
         .package(name: "TweetNacl", url: "https://github.com/lishuailibertine/tweetnacl-swiftwrap", from: "1.0.3"),
         .package(name: "xxHash-Swift", url: "https://github.com/lishuailibertine/xxHash-Swift", from: "1.1.1"),
-        .package(name: "SubstrateKeychain", url: "https://github.com/lishuailibertine/SubstrateKaychain", from: "0.0.5"),
-        .package(name: "SS58Factory", url: "https://github.com/lishuailibertine/SS58Factory", from: "0.1.4"),
+        .package(name: "SubstrateKeychain", url: "https://github.com/lishuailibertine/SubstrateKaychain", from: "0.0.6"),
+        .package(name: "SS58Factory", url: "https://github.com/lishuailibertine/SS58Factory", from: "0.1.6"),
         .package(name: "scrypt", url: "https://github.com/v57/scrypt.c", from: "0.1.1"),
         .package(name: "RobinHood", url: "https://github.com/lishuailibertine/robinhood-ios", from: "3.0.0"),
         .package(name: "SwiftyBeaver", url: "https://github.com/SwiftyBeaver/SwiftyBeaver", from: "1.9.5"),
-        .package(name: "Starscream", url: "https://github.com/daltoniam/Starscream", from: "3.1.1")
+        .package(name: "Starscream", url: "https://github.com/daltoniam/Starscream", from: "4.0.4")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

@@ -2,38 +2,38 @@ import Foundation
 import Starscream
 
 extension WebSocketEngine: WebSocketDelegate {
-//    func didReceive(event: WebSocketEvent, client: WebSocket) {
-//        mutex.lock()
-//        switch event {
-//        case .binary(let data):
-//            handleBinaryEvent(data: data)
-//            break
-//        case .cancelled:
-//            handleCancelled()
-//            break
-//        case .connected(_):
-//            handleConnectedEvent()
-//            break
-//        case .disconnected(_, _):
-//            handleDisconnectedEvent(error: nil)
-//            break
-//        case .error(let error):
-//            handleErrorEvent(error)
-//            break
-//        case .text(let text):
-//            handleTextEvent(string: text)
-//            break
-//        case .pong(_):
-//            break
-//        case .ping(_):
-//            break
-//        case .viabilityChanged(_):
-//            break
-//        case .reconnectSuggested(_):
-//            break
-//        }
-//        mutex.unlock()
-//    }
+    func didReceive(event: WebSocketEvent, client: WebSocket) {
+        mutex.lock()
+        switch event {
+        case .binary(let data):
+            handleBinaryEvent(data: data)
+            break
+        case .cancelled:
+            handleCancelled()
+            break
+        case .connected(_):
+            handleConnectedEvent()
+            break
+        case .disconnected(_, _):
+            handleDisconnectedEvent(error: nil)
+            break
+        case .error(let error):
+            handleErrorEvent(error)
+            break
+        case .text(let text):
+            handleTextEvent(string: text)
+            break
+        case .pong(_):
+            break
+        case .ping(_):
+            break
+        case .viabilityChanged(_):
+            break
+        case .reconnectSuggested(_):
+            break
+        }
+        mutex.unlock()
+    }
     public   func websocketDidConnect(socket: WebSocketClient) {
         mutex.lock()
         handleConnectedEvent()
