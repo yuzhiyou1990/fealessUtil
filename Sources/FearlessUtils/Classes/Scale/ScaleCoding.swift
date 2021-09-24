@@ -30,7 +30,7 @@ public extension ScaleDecoding {
 }
 
 public final class ScaleEncoder: ScaleEncoding {
-    var data: Data = Data()
+    public var data: Data = Data()
 
     public init() {}
 
@@ -48,7 +48,7 @@ public enum ScaleDecoderError: Error {
 }
 
 public final class ScaleDecoder: ScaleDecoding {
-    let data: Data
+    public let data: Data
 
     private var pointer: Int = 0
 
