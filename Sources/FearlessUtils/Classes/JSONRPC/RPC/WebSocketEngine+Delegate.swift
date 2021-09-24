@@ -2,7 +2,7 @@ import Foundation
 import Starscream
 
 extension WebSocketEngine: WebSocketDelegate {
-    func didReceive(event: WebSocketEvent, client: WebSocket) {
+    public func didReceive(event: WebSocketEvent, client: WebSocket) {
         mutex.lock()
         switch event {
         case .binary(let data):
@@ -34,29 +34,29 @@ extension WebSocketEngine: WebSocketDelegate {
         }
         mutex.unlock()
     }
-    public   func websocketDidConnect(socket: WebSocketClient) {
-        mutex.lock()
-        handleConnectedEvent()
-        mutex.unlock()
-    }
-    
-    public  func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-        mutex.lock()
-        handleDisconnectedEvent(error: error)
-        mutex.unlock()
-    }
-    
-    public  func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-        mutex.lock()
-        handleTextEvent(string: text)
-        mutex.unlock()
-    }
-    
-    public  func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-        mutex.lock()
-        handleBinaryEvent(data: data)
-        mutex.unlock()
-    }
+//    public   func websocketDidConnect(socket: WebSocketClient) {
+//        mutex.lock()
+//        handleConnectedEvent()
+//        mutex.unlock()
+//    }
+//
+//    public  func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+//        mutex.lock()
+//        handleDisconnectedEvent(error: error)
+//        mutex.unlock()
+//    }
+//
+//    public  func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
+//        mutex.lock()
+//        handleTextEvent(string: text)
+//        mutex.unlock()
+//    }
+//
+//    public  func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
+//        mutex.lock()
+//        handleBinaryEvent(data: data)
+//        mutex.unlock()
+//    }
     
     private func handleCancelled() {
         logger.warning("Remote cancelled")
