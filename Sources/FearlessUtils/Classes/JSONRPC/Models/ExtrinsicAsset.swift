@@ -80,22 +80,28 @@ public struct ExtrinsicAsset: ScaleCodable {
         scaleEncoder.appendRaw(data: encodedData)
     }
 }
+public enum AccountType: Equatable {
+    static let accountId1 = "0x00"
+    static let accountId2 = "0xff"
 
+    case address1(value: Data)
+    case address2(value: Data)
+}
 public struct ExtrinsicTransaction: ScaleCodable {
-    public let accountId: Data
+    public var accountType: AccountType
     public  let signatureVersion: UInt8
     public  let signature: Data
     public let era: Era
     public let nonce: UInt32
     public  let tip: BigUInt
 
-    public init(accountId: Data,
+    public init(accountType: AccountType,
          signatureVersion: UInt8,
          signature: Data,
          era: Era,
          nonce: UInt32,
          tip: BigUInt) {
-        self.accountId = accountId
+        self.accountType = accountType
         self.signatureVersion = signatureVersion
         self.signature = signature
         self.era = era
@@ -104,7 +110,14 @@ public struct ExtrinsicTransaction: ScaleCodable {
     }
 
     public init(scaleDecoder: ScaleDecoding) throws {
-        accountId = try scaleDecoder.readAndConfirm(count: Int(ExtrinsicAssetConstants.accountIdLength))
+        let accountId = try scaleDecoder.readAndConfirm(count: Int(1))
+        if accountId.toHex(includePrefix: true) == AccountType.accountId1 {
+            accountType = .address1(value: try scaleDecoder.readAndConfirm(count: Int(ExtrinsicAssetConstants.accountIdLength)))
+        }else if accountId.toHex(includePrefix: true) == AccountType.accountId2 {
+            accountType = .address2(value: try scaleDecoder.readAndConfirm(count: Int(ExtrinsicAssetConstants.accountIdLength)))
+        }else{
+            accountType = .address1(value: try scaleDecoder.readAndConfirm(count: Int(ExtrinsicAssetConstants.accountIdLength)))
+        }
         signatureVersion = try UInt8(scaleDecoder: scaleDecoder)
 
         guard let cryptoType = CryptoType(version: signatureVersion) else {
@@ -122,8 +135,14 @@ public struct ExtrinsicTransaction: ScaleCodable {
     }
 
     public func encode(scaleEncoder: ScaleEncoding) throws {
-        scaleEncoder.appendRaw(data:try! Data(hexString: "0x00") )
-        scaleEncoder.appendRaw(data: accountId)
+        switch accountType {
+        case .address1(let value):
+            scaleEncoder.appendRaw(data:try! Data(hexString: AccountType.accountId1) )
+            scaleEncoder.appendRaw(data:value)
+        case .address2(let value):
+            scaleEncoder.appendRaw(data:try! Data(hexString: AccountType.accountId2) )
+            scaleEncoder.appendRaw(data:value)
+        }
         try signatureVersion.encode(scaleEncoder: scaleEncoder)
         scaleEncoder.appendRaw(data: signature)
         try era.encode(scaleEncoder: scaleEncoder)

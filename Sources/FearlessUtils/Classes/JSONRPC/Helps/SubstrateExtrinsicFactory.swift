@@ -3,7 +3,7 @@ import SubstrateKeychain
 import BigInt
 
 public protocol SubstarteExtrinsicFactoryProtocol {
-     static func transferExtrinsic(from senderAccountId: Data,
+     static func transferExtrinsic(from senderAccountId: AccountType,
                                   transferCall: ScaleCodable?,
                                   tip: BigUInt?,
                                   additionalParameters: SubstrateExtrinsicParameters,
@@ -36,7 +36,7 @@ public struct SubstrateExtrinsicParameters {
 public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
     public  static let extrinsicVersion: UInt8 = 132
 
-    public static func transferExtrinsic(from senderAccountId: Data,
+    public static func transferExtrinsic(from senderAccountId: AccountType,
                                   transferCall: ScaleCodable?,
                                   tip: BigUInt? = 0,
                                   additionalParameters: SubstrateExtrinsicParameters,
@@ -66,7 +66,7 @@ public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
 
         let signature = try signer(payloadData)
 
-        let transaction = ExtrinsicTransaction(accountId: senderAccountId,
+        let transaction = ExtrinsicTransaction(accountType: senderAccountId,
                                       signatureVersion: additionalParameters.signatureVersion,
                                       signature: signature,
                                       era: era,
