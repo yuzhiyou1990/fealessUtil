@@ -81,9 +81,10 @@ public struct ExtrinsicAsset: ScaleCodable {
     }
 }
 public enum AccountType: Equatable {
-    public static let accountId1 = "0x00"
-    public static let accountId2 = "0xff"
+    public static let accountId0 = "0x00"
+    public static let accountId1 = "0xff"
 
+    case address0(value: Data)
     case address1(value: Data)
     case address2(value: Data)
 }
@@ -111,12 +112,12 @@ public struct ExtrinsicTransaction: ScaleCodable {
 
     public init(scaleDecoder: ScaleDecoding) throws {
         let accountId = try scaleDecoder.readAndConfirm(count: Int(1))
-        if accountId.toHex(includePrefix: true) == AccountType.accountId1 {
+        if accountId.toHex(includePrefix: true) == AccountType.accountId0 {
+            accountType = .address0(value: try scaleDecoder.readAndConfirm(count: Int(ExtrinsicAssetConstants.accountIdLength)))
+        }else if accountId.toHex(includePrefix: true) == AccountType.accountId1 {
             accountType = .address1(value: try scaleDecoder.readAndConfirm(count: Int(ExtrinsicAssetConstants.accountIdLength)))
-        }else if accountId.toHex(includePrefix: true) == AccountType.accountId2 {
-            accountType = .address2(value: try scaleDecoder.readAndConfirm(count: Int(ExtrinsicAssetConstants.accountIdLength)))
         }else{
-            accountType = .address1(value: try scaleDecoder.readAndConfirm(count: Int(ExtrinsicAssetConstants.accountIdLength)))
+            accountType = .address2(value: try scaleDecoder.readAndConfirm(count: Int(ExtrinsicAssetConstants.accountIdLength)))
         }
         signatureVersion = try UInt8(scaleDecoder: scaleDecoder)
 
@@ -136,11 +137,13 @@ public struct ExtrinsicTransaction: ScaleCodable {
 
     public func encode(scaleEncoder: ScaleEncoding) throws {
         switch accountType {
+        case .address0(let value):
+            scaleEncoder.appendRaw(data:try! Data(hexString: AccountType.accountId0) )
+            scaleEncoder.appendRaw(data:value)
         case .address1(let value):
             scaleEncoder.appendRaw(data:try! Data(hexString: AccountType.accountId1) )
             scaleEncoder.appendRaw(data:value)
         case .address2(let value):
-            scaleEncoder.appendRaw(data:try! Data(hexString: AccountType.accountId2) )
             scaleEncoder.appendRaw(data:value)
         }
         try signatureVersion.encode(scaleEncoder: scaleEncoder)
