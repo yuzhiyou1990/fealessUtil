@@ -81,8 +81,8 @@ public struct ExtrinsicAsset: ScaleCodable {
     }
 }
 public enum AccountType: Equatable {
-    static let accountId1 = "0x00"
-    static let accountId2 = "0xff"
+    public static let accountId1 = "0x00"
+    public static let accountId2 = "0xff"
 
     case address1(value: Data)
     case address2(value: Data)
