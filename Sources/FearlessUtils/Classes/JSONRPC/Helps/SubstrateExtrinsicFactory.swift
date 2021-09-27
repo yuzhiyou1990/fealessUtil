@@ -13,15 +13,17 @@ public protocol SubstarteExtrinsicFactoryProtocol {
 public struct SubstrateExtrinsicParameters {
     public  let nonce: UInt32
     public  let genesisHash: Data
+    public  let blockHash: Data
     public  let specVersion: UInt32
     public  let transactionVersion: UInt32
     public  let signatureVersion: UInt8
     public  let moduleIndex: UInt8
     public  let callIndex: UInt8
     public  let tip: BigUInt?
-    public init(nonce: UInt32,genesisHash: Data,specVersion: UInt32,transactionVersion: UInt32,signatureVersion: UInt8,moduleIndex: UInt8,callIndex: UInt8,tip: BigUInt?){
+    public init(nonce: UInt32,genesisHash: Data,blockHash: Data,specVersion: UInt32,transactionVersion: UInt32,signatureVersion: UInt8,moduleIndex: UInt8,callIndex: UInt8,tip: BigUInt?){
         self.nonce = nonce
         self.genesisHash = genesisHash
+        self.blockHash = blockHash
         self.specVersion = specVersion
         self.transactionVersion = transactionVersion
         self.signatureVersion = signatureVersion
@@ -55,7 +57,7 @@ public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
                                        specVersion: additionalParameters.specVersion,
                                        transactionVersion: additionalParameters.transactionVersion,
                                        genesisHash: additionalParameters.genesisHash,
-                                       blockHash: additionalParameters.genesisHash)
+                                       blockHash: additionalParameters.blockHash)
 
         let payloadEncoder = ScaleEncoder()
         try payload.encode(scaleEncoder: payloadEncoder)
