@@ -25,6 +25,29 @@ public final class RuntimeHelper {
         let decoder = try ScaleDecoder(data: expectedData)
         return try RuntimeMetadata(scaleDecoder: decoder)
     }
+    public static func createRuntimeMetadataV14(_ name: String) throws -> RuntimeMetadataV14 {
+        guard let metadataUrl = Bundle(for: self).url(forResource: name,
+                                                      withExtension: "") else {
+            throw RuntimeHelperError.invalidCatalogMetadataName
+        }
+
+        let hex = try String(contentsOf: metadataUrl)
+            .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        let expectedData = try Data(hexString: hex)
+
+        let decoder = try ScaleDecoder(data: expectedData)
+        return try RuntimeMetadataV14(scaleDecoder: decoder)
+    }
+    public static func createRuntimeMetadataV14WithData(_ dataHex: String) throws -> RuntimeMetadataV14 {
+        let expectedData = try Data(hexString: dataHex)
+        let decoder = try ScaleDecoder(data: expectedData)
+        return try RuntimeMetadataV14(scaleDecoder: decoder)
+    }
+    public static func getRuntimeMetadataHeader(_ dataHex: String)throws -> RuntimeMetadataHeader {
+        let expectedData = try Data(hexString: dataHex)
+        let decoder = try ScaleDecoder(data: expectedData)
+        return try RuntimeMetadataHeader(scaleDecoder: decoder)
+    }
     public  static func createTypeRegistry(from name: String, runtimeMetadataName: String) throws
     -> TypeRegistry {
         guard let url = Bundle.main.url(forResource: name, withExtension: "json") else {

@@ -1,6 +1,12 @@
 import Foundation
-
-public struct RuntimeMetadata {
+public protocol RuntimeMetadataProtocol{
+    func getModuleIndexAndCallIndex(in moduleName: String, callName: String)->(UInt8,UInt8)?
+    func getModuleIndex(_ name: String) -> UInt8?
+    func getCallIndex(in moduleName: String, callName: String) -> UInt8?
+}
+public struct RuntimeMetadata:RuntimeMetadataProtocol {
+    
+    
     public let metaReserved: UInt32
     public let runtimeMetadataVersion: UInt8
     public let modules: [ModuleMetadata]
@@ -21,7 +27,15 @@ public struct RuntimeMetadata {
             .first(where: { $0.name == module })?
             .calls?.first(where: { $0.name == name })
     }
-
+    public func getModuleIndexAndCallIndex(in moduleName: String, callName: String) -> (UInt8, UInt8)? {
+        guard let moduleIndex = getModuleIndex(moduleName) else {
+            return nil
+        }
+        guard let callIndex = getCallIndex(in: moduleName, callName: callName) else {
+            return nil
+        }
+        return (moduleIndex,callIndex)
+    }
     public func getModuleIndex(_ name: String) -> UInt8? {
         modules.first(where: { $0.name == name })?.index
     }
