@@ -101,8 +101,8 @@ extension TypesMetadata: ScaleCodable {
         self.params = try [Si1TypeParameter](scaleDecoder:scaleDecoder)
         self.def = try Si1TypeDef(scaleDecoder:scaleDecoder)
         self.docs = try [String](scaleDecoder:scaleDecoder)
-        print("path =\(self.path)")
-        print("id =\(self.id)")
+//        print("path =\(self.path)")
+//        print("id =\(self.id)")
     }
 }
 public struct LookupMetadata{
