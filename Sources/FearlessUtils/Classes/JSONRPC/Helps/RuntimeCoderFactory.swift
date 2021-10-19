@@ -10,13 +10,13 @@ public protocol RuntimeCoderFactoryProtocol {
 }
 
 public final  class RuntimeCoderFactory: RuntimeCoderFactoryProtocol {
-    public  let catalog: TypeRegistryCatalogProtocol
+    public  let catalog: TypeRegistryCatalogProtocol?
     public  let specVersion: UInt32
     public  let txVersion: UInt32
     public let metadata: RuntimeMetadataProtocol
 
     public init(
-        catalog: TypeRegistryCatalogProtocol,
+        catalog: TypeRegistryCatalogProtocol? = nil,
         specVersion: UInt32,
         txVersion: UInt32,
         metadata: RuntimeMetadataProtocol
@@ -28,10 +28,10 @@ public final  class RuntimeCoderFactory: RuntimeCoderFactoryProtocol {
     }
 
     public  func createEncoder() -> DynamicScaleEncoding {
-        DynamicScaleEncoder(registry: catalog, version: UInt64(specVersion))
+        DynamicScaleEncoder(registry: catalog!, version: UInt64(specVersion))
     }
 
     public func createDecoder(from data: Data) throws -> DynamicScaleDecoding {
-        try DynamicScaleDecoder(data: data, registry: catalog, version: UInt64(specVersion))
+        try DynamicScaleDecoder(data: data, registry: catalog!, version: UInt64(specVersion))
     }
 }
