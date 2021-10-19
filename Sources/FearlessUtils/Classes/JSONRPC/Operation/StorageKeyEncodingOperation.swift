@@ -39,7 +39,7 @@ public class MapKeyEncodingOperation<T: Encodable>: BaseOperation<[Data]> {
                 throw StorageKeyEncodingOperationError.missingRequiredParams
             }
 
-            guard let entry = factory.metadata.getStorageMetadata(
+            guard let entry = (factory.metadata as! RuntimeMetadata).getStorageMetadata(
                 in: path.moduleName,
                 storageName: path.itemName
             ) else {
@@ -125,7 +125,7 @@ public class DoubleMapKeyEncodingOperation<T1: Encodable, T2: Encodable>: BaseOp
                 throw StorageKeyEncodingOperationError.missingRequiredParams
             }
 
-            guard let entry = factory.metadata.getStorageMetadata(
+            guard let entry = (factory.metadata as! RuntimeMetadata).getStorageMetadata(
                 in: path.moduleName,
                 storageName: path.itemName
             ) else {

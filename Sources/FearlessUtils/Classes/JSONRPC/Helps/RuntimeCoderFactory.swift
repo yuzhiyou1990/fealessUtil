@@ -3,7 +3,7 @@ import Foundation
 public protocol RuntimeCoderFactoryProtocol {
      var specVersion: UInt32 { get }
      var txVersion: UInt32 { get }
-     var metadata: RuntimeMetadata { get }
+     var metadata: RuntimeMetadataProtocol { get }
 
      func createEncoder() -> DynamicScaleEncoding
      func createDecoder(from data: Data) throws -> DynamicScaleDecoding
@@ -13,13 +13,13 @@ public final  class RuntimeCoderFactory: RuntimeCoderFactoryProtocol {
     public  let catalog: TypeRegistryCatalogProtocol
     public  let specVersion: UInt32
     public  let txVersion: UInt32
-    public let metadata: RuntimeMetadata
+    public let metadata: RuntimeMetadataProtocol
 
     public init(
         catalog: TypeRegistryCatalogProtocol,
         specVersion: UInt32,
         txVersion: UInt32,
-        metadata: RuntimeMetadata
+        metadata: RuntimeMetadataProtocol
     ) {
         self.catalog = catalog
         self.specVersion = specVersion

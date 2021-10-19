@@ -13,7 +13,7 @@ public protocol StorageDecodable {
 
 public extension StorageDecodable {
     func decode(data: Data, path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON {
-        guard let entry = codingFactory.metadata.getStorageMetadata(
+        guard let entry = (codingFactory.metadata as! RuntimeMetadata).getStorageMetadata(
             in: path.moduleName,
             storageName: path.itemName
         ) else {
@@ -31,7 +31,7 @@ public protocol StorageModifierHandling {
  
 extension StorageModifierHandling {
     public  func handleModifier(at path: StorageCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON? {
-        guard let entry = codingFactory.metadata.getStorageMetadata(
+        guard let entry = (codingFactory.metadata as! RuntimeMetadata).getStorageMetadata(
             in: path.moduleName,
             storageName: path.itemName
         ) else {
@@ -220,7 +220,7 @@ public protocol ConstantDecodable {
 
 extension ConstantDecodable {
     public func decode(at path: ConstantCodingPath, codingFactory: RuntimeCoderFactoryProtocol) throws -> JSON {
-        guard let entry = codingFactory.metadata
+        guard let entry = (codingFactory.metadata as! RuntimeMetadata)
             .getConstant(in: path.moduleName, constantName: path.constantName) else {
             throw StorageDecodingOperationError.invalidStoragePath
         }
