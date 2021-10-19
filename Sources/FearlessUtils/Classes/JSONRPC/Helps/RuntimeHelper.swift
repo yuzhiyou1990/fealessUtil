@@ -88,9 +88,9 @@ public final class RuntimeHelper {
                                           networkName: String,
                                                   runtimeMetadata: RuntimeMetadataProtocol,_ version:UInt8)throws -> TypeRegistryCatalog? {
         if version == 14 {
-            return try createTypeRegistryCatalog(from: baseName, networkName: networkName, runtimeMetadata: runtimeMetadata as! RuntimeMetadata)
-        }else{
             return nil
+        }else{
+            return try createTypeRegistryCatalog(from: baseName, networkName: networkName, runtimeMetadata: runtimeMetadata as! RuntimeMetadata)
         }
     }
     public  static func createTypeRegistryCatalog(from baseName: String,
@@ -120,9 +120,9 @@ public final class RuntimeHelper {
                                                   versionJson networkJson: String?,
                                                   runtimeMetadata: RuntimeMetadataProtocol,_ version:UInt8)throws -> TypeRegistryCatalog? {
         if version == 14 {
-            return try createTypeRegistryCatalog(from: baseName, versionJson: networkJson, runtimeMetadata: runtimeMetadata as! RuntimeMetadata)
-        }else{
             return nil
+        }else{
+            return try createTypeRegistryCatalog(from: baseName, versionJson: networkJson, runtimeMetadata: runtimeMetadata as! RuntimeMetadata)
         }
     }
     public  static func createTypeRegistryCatalog(from baseName: String,
