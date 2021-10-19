@@ -117,6 +117,15 @@ public final class RuntimeHelper {
         return registry
     }
     public  static func createTypeRegistryCatalog(from baseName: String,
+                                                  versionJson networkJson: String?,
+                                                  runtimeMetadata: RuntimeMetadataProtocol,_ version:UInt8)throws -> TypeRegistryCatalog? {
+        if version == 14 {
+            return try createTypeRegistryCatalog(from: baseName, versionJson: networkJson, runtimeMetadata: runtimeMetadata as! RuntimeMetadata)
+        }else{
+            return nil
+        }
+    }
+    public  static func createTypeRegistryCatalog(from baseName: String,
                                           versionJson networkJson: String?,
                                           runtimeMetadata: RuntimeMetadata)
     throws -> TypeRegistryCatalog {
