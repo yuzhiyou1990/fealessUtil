@@ -38,6 +38,15 @@ public final class RuntimeHelper {
         let decoder = try ScaleDecoder(data: expectedData)
         return try RuntimeMetadataV14(scaleDecoder: decoder)
     }
+    public static func createRuntimeMetadataWithData(_ dataHex: String,_ version:UInt8) throws -> RuntimeMetadataProtocol {
+        let expectedData = try Data(hexString: dataHex)
+        let decoder = try ScaleDecoder(data: expectedData)
+        if version == 14 {
+            return try RuntimeMetadataV14(scaleDecoder: decoder)
+        }else{
+            return try RuntimeMetadata(scaleDecoder: decoder)
+        }
+    }
     public static func createRuntimeMetadataV14WithData(_ dataHex: String) throws -> RuntimeMetadataV14 {
         let expectedData = try Data(hexString: dataHex)
         let decoder = try ScaleDecoder(data: expectedData)
@@ -75,7 +84,15 @@ public final class RuntimeHelper {
                                              networkName: networkName,
                                              runtimeMetadata: runtimeMetadata)
     }
-
+    public  static func createTypeRegistryCatalog(from baseName: String,
+                                          networkName: String,
+                                                  runtimeMetadata: RuntimeMetadataProtocol,_ version:UInt8)throws -> TypeRegistryCatalog? {
+        if version == 14 {
+            return try createTypeRegistryCatalog(from: baseName, networkName: networkName, runtimeMetadata: runtimeMetadata as! RuntimeMetadata)
+        }else{
+            return nil
+        }
+    }
     public  static func createTypeRegistryCatalog(from baseName: String,
                                           networkName: String,
                                           runtimeMetadata: RuntimeMetadata)
