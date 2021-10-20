@@ -38,7 +38,26 @@ public struct RuntimeMetadataV14:RuntimeMetadataProtocol{
     public func getModuleIndex(_ name: String) -> UInt8? {
         pallets.first(where: { $0.name.lowercased() == name.lowercased() })?.index
     }
-
+    public func getModuleNameAndCallName(moduleIndex: UInt8, callIndex: UInt8) -> (String, String)? {
+        guard let palletMetadataV14 = pallets.first(where: { $0.index.description == "\(moduleIndex)" }) else {
+            return nil
+        }
+        guard let type = palletMetadataV14.calls?.type else {
+            return nil
+        }
+        guard let typesMetadata = self.lookup.types.first(where: { $0.id == type }) else {
+            return nil
+        }
+        switch typesMetadata.def.si1TypeDefEnum{
+        case .variant(let si1TypeDefVariant):
+            guard let callName = si1TypeDefVariant.fields.first(where: { $0.index.description == "\(callIndex)" })?.name else {
+                return nil
+            }
+            return (palletMetadataV14.name,callName)
+        default:
+            return nil
+        }
+    }
     public func getCallIndex(in moduleName: String, callName: String) -> UInt8? {
        
         guard let palletMetadataV14 = pallets.first(where: { $0.name.lowercased() == moduleName.lowercased() }) else {

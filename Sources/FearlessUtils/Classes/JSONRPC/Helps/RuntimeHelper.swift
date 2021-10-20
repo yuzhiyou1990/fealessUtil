@@ -41,7 +41,7 @@ public final class RuntimeHelper {
     public static func createRuntimeMetadataWithData(_ dataHex: String,_ version:UInt8) throws -> RuntimeMetadataProtocol {
         let expectedData = try Data(hexString: dataHex)
         let decoder = try ScaleDecoder(data: expectedData)
-        if version == 14 {
+        if version >= 14 {
             return try RuntimeMetadataV14(scaleDecoder: decoder)
         }else{
             return try RuntimeMetadata(scaleDecoder: decoder)
@@ -87,7 +87,7 @@ public final class RuntimeHelper {
     public  static func createTypeRegistryCatalog(from baseName: String,
                                           networkName: String,
                                                   runtimeMetadata: RuntimeMetadataProtocol,_ version:UInt8)throws -> TypeRegistryCatalog? {
-        if version == 14 {
+        if version >= 14 {
             return nil
         }else{
             return try createTypeRegistryCatalog(from: baseName, networkName: networkName, runtimeMetadata: runtimeMetadata as! RuntimeMetadata)
@@ -119,7 +119,7 @@ public final class RuntimeHelper {
     public  static func createTypeRegistryCatalog(from baseName: String,
                                                   versionJson networkJson: String?,
                                                   runtimeMetadata: RuntimeMetadataProtocol,_ version:UInt8)throws -> TypeRegistryCatalog? {
-        if version == 14 {
+        if version >= 14 {
             return nil
         }else{
             return try createTypeRegistryCatalog(from: baseName, versionJson: networkJson, runtimeMetadata: runtimeMetadata as! RuntimeMetadata)

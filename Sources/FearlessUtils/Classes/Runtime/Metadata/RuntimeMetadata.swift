@@ -3,6 +3,7 @@ public protocol RuntimeMetadataProtocol{
     func getModuleIndexAndCallIndex(in moduleName: String, callName: String)->(UInt8,UInt8)?
     func getModuleIndex(_ name: String) -> UInt8?
     func getCallIndex(in moduleName: String, callName: String) -> UInt8?
+    func getModuleNameAndCallName(moduleIndex:UInt8,callIndex:UInt8)->(String,String)?
 }
 public struct RuntimeMetadata:RuntimeMetadataProtocol {
     
@@ -39,7 +40,15 @@ public struct RuntimeMetadata:RuntimeMetadataProtocol {
     public func getModuleIndex(_ name: String) -> UInt8? {
         modules.first(where: { $0.name == name })?.index
     }
-
+    public func getModuleNameAndCallName(moduleIndex: UInt8, callIndex: UInt8) -> (String, String)? {
+        guard let moduleName = modules.first(where: { $0.index.description == "\(moduleIndex)" })?.name  else {
+            return nil
+        }
+        guard let callName = modules.first(where: { $0.index.description == "\(moduleIndex)" })?.calls?[Int(callIndex)].name else {
+            return nil
+        }
+        return (moduleName,callName)
+    }
     public func getCallIndex(in moduleName: String, callName: String) -> UInt8? {
         guard let index = modules.first(where: { $0.name == moduleName })?.calls?
                 .firstIndex(where: { $0.name == callName}) else {
