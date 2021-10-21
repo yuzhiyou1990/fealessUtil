@@ -2,6 +2,7 @@ import Foundation
 
 public struct JSONRPCError: Error, Decodable {
     public let message: String
+    public let data: String?
     public let code: Int
 }
 
