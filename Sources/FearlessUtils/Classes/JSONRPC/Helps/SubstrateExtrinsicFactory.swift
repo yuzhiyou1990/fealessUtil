@@ -35,7 +35,7 @@ public struct SubstrateExtrinsicParameters {
 
 public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
     public  static let extrinsicVersion: UInt8 = 132
-
+    static let payloadHashingTreshold = 256
     public static func transferExtrinsic(from senderAccountId: AccountType,
                                   transferCall: ScaleCodable?,
                                   tip: BigUInt? = 0,
@@ -62,8 +62,10 @@ public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
         let payloadEncoder = ScaleEncoder()
         try payload.encode(scaleEncoder: payloadEncoder)
 
-        let payloadData = payloadEncoder.encode()
+        var payloadData = payloadEncoder.encode()
 
+        payloadData = payloadData.count > Self.payloadHashingTreshold ? (try payloadData.blake2b32()) : payloadData
+        
         let signature = try signer(payloadData)
 
         let transaction = ExtrinsicTransaction(accountType: senderAccountId,
