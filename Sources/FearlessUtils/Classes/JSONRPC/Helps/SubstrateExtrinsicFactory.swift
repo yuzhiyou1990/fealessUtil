@@ -20,7 +20,8 @@ public struct SubstrateExtrinsicParameters {
     public  let moduleIndex: UInt8
     public  let callIndex: UInt8
     public  let tip: BigUInt?
-    public init(nonce: UInt32,genesisHash: Data,blockHash: Data,specVersion: UInt32,transactionVersion: UInt32,signatureVersion: UInt8,moduleIndex: UInt8,callIndex: UInt8,tip: BigUInt?){
+    public  let additionalData: Data?
+    public init(nonce: UInt32,genesisHash: Data,blockHash: Data,specVersion: UInt32,transactionVersion: UInt32,signatureVersion: UInt8,moduleIndex: UInt8,callIndex: UInt8,tip: BigUInt?,additionalData: Data? = nil){
         self.nonce = nonce
         self.genesisHash = genesisHash
         self.blockHash = blockHash
@@ -30,6 +31,7 @@ public struct SubstrateExtrinsicParameters {
         self.moduleIndex = moduleIndex
         self.callIndex = callIndex
         self.tip = tip
+        self.additionalData = additionalData
     }
 }
 
@@ -54,6 +56,7 @@ public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
                                        era: era,
                                        nonce: additionalParameters.nonce,
                                        tip: tip!,
+                                       additionalData: additionalParameters.additionalData,
                                        specVersion: additionalParameters.specVersion,
                                        transactionVersion: additionalParameters.transactionVersion,
                                        genesisHash: additionalParameters.genesisHash,
@@ -73,7 +76,8 @@ public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
                                       signature: signature,
                                       era: era,
                                       nonce: additionalParameters.nonce,
-                                      tip: tip!)
+                                      tip: tip!,
+                                      additionalData: additionalParameters.additionalData)
 
         let extrinsic = ExtrinsicAsset(version: Self.extrinsicVersion,
                                   transaction: transaction,

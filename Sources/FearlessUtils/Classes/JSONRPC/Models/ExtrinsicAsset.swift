@@ -95,19 +95,22 @@ public struct ExtrinsicTransaction: ScaleCodable {
     public let era: Era
     public let nonce: UInt32
     public  let tip: BigUInt
-
+    public let additionalData: Data?
+    
     public init(accountType: AccountType,
          signatureVersion: UInt8,
          signature: Data,
          era: Era,
          nonce: UInt32,
-         tip: BigUInt) {
+         tip: BigUInt,
+         additionalData: Data? = nil) {
         self.accountType = accountType
         self.signatureVersion = signatureVersion
         self.signature = signature
         self.era = era
         self.nonce = nonce
         self.tip = tip
+        self.additionalData = additionalData
     }
 
     public init(scaleDecoder: ScaleDecoding) throws {
@@ -133,6 +136,7 @@ public struct ExtrinsicTransaction: ScaleCodable {
         nonce = UInt32(nonceValue)
 
         tip = try BigUInt(scaleDecoder: scaleDecoder)
+        additionalData = try scaleDecoder.readAndConfirm(count: Int(1))
     }
 
     public func encode(scaleEncoder: ScaleEncoding) throws {
@@ -151,6 +155,9 @@ public struct ExtrinsicTransaction: ScaleCodable {
         try era.encode(scaleEncoder: scaleEncoder)
         try BigUInt(nonce).encode(scaleEncoder: scaleEncoder)
         try tip.encode(scaleEncoder: scaleEncoder)
+        if additionalData != nil {
+            scaleEncoder.appendRaw(data: additionalData!)
+        }
     }
 }
 
@@ -159,11 +166,12 @@ public struct ExtrinsicPayload: ScaleEncodable {
     public let era: Era
     public let nonce: UInt32
     public let tip: BigUInt
+    public let additionalData: Data?
     public let specVersion: UInt32
     public let transactionVersion: UInt32
     public let genesisHash: Data
     public let blockHash: Data
-
+    
     public func encode(scaleEncoder: ScaleEncoding) throws {
         try call.moduleIndex.encode(scaleEncoder: scaleEncoder)
         try call.callIndex.encode(scaleEncoder: scaleEncoder)
@@ -175,16 +183,20 @@ public struct ExtrinsicPayload: ScaleEncodable {
         try era.encode(scaleEncoder: scaleEncoder)
         try BigUInt(nonce).encode(scaleEncoder: scaleEncoder)
         try tip.encode(scaleEncoder: scaleEncoder)
+        if additionalData != nil {
+            scaleEncoder.appendRaw(data: additionalData!)
+        }
         try specVersion.encode(scaleEncoder: scaleEncoder)
         try transactionVersion.encode(scaleEncoder: scaleEncoder)
         scaleEncoder.appendRaw(data: genesisHash)
         scaleEncoder.appendRaw(data: blockHash)
     }
-    public init(call:Call,era:Era,nonce:UInt32,tip:BigUInt,specVersion:UInt32,transactionVersion:UInt32,genesisHash:Data,blockHash:Data){
+    public init(call:Call,era:Era,nonce:UInt32,tip:BigUInt,additionalData: Data? = nil,specVersion:UInt32,transactionVersion:UInt32,genesisHash:Data,blockHash:Data){
         self.call = call
         self.era = era
         self.nonce = nonce
         self.tip = tip
+        self.additionalData = additionalData
         self.specVersion = specVersion
         self.transactionVersion = transactionVersion
         self.genesisHash = genesisHash
