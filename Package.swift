@@ -11,7 +11,7 @@ let package = Package(
             name: "FearlessUtils",
             targets: ["FearlessUtils"]),
     ],
-    dependencies: [
+    dependencies: [ 
         .package(name: "BigInt", url: "https://github.com/attaswift/BigInt.git", from: "5.2.1"),
         .package(name: "TweetNacl", url: "https://github.com/lishuailibertine/tweetnacl-swiftwrap", from: "1.0.3"),
         .package(name: "xxHash-Swift", url: "https://github.com/lishuailibertine/xxHash-Swift", from: "1.1.1"),
