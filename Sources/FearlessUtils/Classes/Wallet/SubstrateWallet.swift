@@ -62,6 +62,31 @@ public final class SubstrateWallet {
         }
         return keyPair
     }
+    public  static func createKeypairWithSecretKey(_ secretKey: Data,_ cryptoType:SubstrateSignType,_ path :String?)throws -> KeyPair {
+        var keyPair:KeyPair
+        let pathComponents =  try pathComponent(junctionsPath: path ?? "")
+        switch cryptoType {
+        case .ecdsa:
+            let superKeyPair = try EcdsaKeyPair(secretKey: secretKey)
+            if pathComponents.count > 0{
+                keyPair = try superKeyPair.derive(path: pathComponents)
+            }else{keyPair = superKeyPair}
+            break
+        case .ed25519:
+            let superKeyPair = try Ed25519KeyPair(secretKey: secretKey)
+            if pathComponents.count > 0{
+                keyPair = try superKeyPair.derive(path: pathComponents)
+            }else{keyPair = superKeyPair}
+            break
+        case .sr25519:
+            let superKeyPair = try Sr25519KeyPair(secretKey: secretKey)
+            if pathComponents.count > 0{
+                keyPair = try superKeyPair.derive(path: pathComponents)
+            }else{keyPair = superKeyPair}
+            break
+        }
+        return keyPair
+    }
     public static func createKeypairWithSeed(_ seed: Data,_ cryptoType:SubstrateSignType,_ path :String?)throws -> KeyPair {
         let pathComponents =  try pathComponent(junctionsPath: path ?? "")
         var keyPair:KeyPair
