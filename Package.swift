@@ -14,8 +14,7 @@ let package = Package(
     dependencies: [ 
         .package(name: "BigInt", url: "https://github.com/attaswift/BigInt.git", from: "5.2.1"),
         .package(name: "TweetNacl", url: "https://github.com/lishuailibertine/tweetnacl-swiftwrap", from: "1.0.3"),
-        .package(name: "xxHash-Swift", url: "https://github.com/daisuke-t-jp/xxHash-Swift", from: "1.1.1"),
-        .package(name: "SubstrateKeychain", url: "https://github.com/lishuailibertine/SubstrateKaychain", from: "0.1.1"),
+        .package(name: "SubstrateKeychain", url: "https://github.com/lishuailibertine/SubstrateKaychain", from: "0.1.2"),
         .package(name: "SS58Factory", url: "https://github.com/lishuailibertine/SS58Factory", from: "0.1.7"),
         .package(name: "scrypt", url: "https://github.com/v57/scrypt.c", from: "0.1.1"),
         .package(name: "RobinHood", url: "https://github.com/lishuailibertine/robinhood-ios", from: "3.0.0"),
@@ -27,6 +26,6 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "FearlessUtils",
-            dependencies: ["BigInt","TweetNacl","xxHash-Swift","SubstrateKeychain","SS58Factory","scrypt","RobinHood","SwiftyBeaver","Starscream"]),
+            dependencies: ["BigInt","TweetNacl", "SubstrateKeychain","SS58Factory","scrypt","RobinHood","SwiftyBeaver","Starscream"]),
     ]
 )
