@@ -19,7 +19,7 @@ let package = Package(
         .package(name: "scrypt", url: "https://github.com/v57/scrypt.c", from: "0.1.1"),
         .package(name: "RobinHood", url: "https://github.com/lishuailibertine/robinhood-ios", from: "3.0.0"),
         .package(name: "SwiftyBeaver", url: "https://github.com/SwiftyBeaver/SwiftyBeaver", from: "1.9.5"),
-        .package(name: "Starscream", url: "https://github.com/daltoniam/Starscream", from: "3.1.1"),
+        .package(name: "Starscream", url: "https://github.com/daltoniam/Starscream", from: "4.0.8"),
         .package(url: "https://github.com/Flight-School/AnyCodable.git", .exact("0.6.1")),
     ],
     targets: [
@@ -28,5 +28,8 @@ let package = Package(
         .target(
             name: "FearlessUtils",
             dependencies: ["BigInt","TweetNacl", "SubstrateKeychain","SS58Factory","scrypt","RobinHood","SwiftyBeaver","Starscream", "AnyCodable"]),
+        .testTarget(
+            name: "FearlessUtilTests",
+            dependencies: ["FearlessUtils"])
     ]
 )
