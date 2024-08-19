@@ -79,6 +79,35 @@ public struct RuntimeMetadataV14:RuntimeMetadataProtocol{
             return nil
         }
     }
+    public func getTypeField(moduleName: String, callName: String) -> [(String, String)]{
+        guard let (moduleIndex, callIndex) = getModuleIndexAndCallIndex(in: moduleName, callName: callName) else {
+            return []
+        }
+        return getTypeField(moduleIndex: moduleIndex, callIndex: callIndex)
+    }
+        
+    public func getTypeField(moduleIndex: UInt8, callIndex: UInt8) -> [(String, String)]{
+        guard let palletMetadataV14 = pallets.first(where: { $0.index.description == "\(moduleIndex)" }) else {
+            return []
+        }
+        guard let type = palletMetadataV14.calls?.type else {
+            return []
+        }
+        guard let typesMetadata = self.lookup.types.first(where: { $0.id == type }) else {
+            return []
+        }
+        switch typesMetadata.def.si1TypeDefEnum{
+        case .variant(let si1TypeDefVariant):
+            var fields = [(String, String)]()
+            let field = si1TypeDefVariant.fields.first(where: {$0.index.description == "\(callIndex)"})
+            field?.field.forEach { field in
+                fields.append((field.name.value ?? "", field.typeName.value ?? ""))
+            }
+            return fields
+        default:
+            return []
+        }
+    }
 }
 
 extension RuntimeMetadataV14: ScaleCodable {

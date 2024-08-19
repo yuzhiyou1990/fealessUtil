@@ -90,20 +90,23 @@ public enum AccountType: Equatable {
 }
 public struct ExtrinsicTransaction: ScaleCodable {
     public var accountType: AccountType
-    public  let signatureVersion: UInt8
-    public  let signature: Data
+    public let signatureVersion: UInt8
+    public let signature: Data
     public let era: Era
     public let nonce: UInt32
-    public  let tip: BigUInt
+    public let tip: BigUInt
     public let additionalData: Data?
-    
+    public let mode: Bool
+    public let metadata: RuntimeMetadataProtocol?
     public init(accountType: AccountType,
-         signatureVersion: UInt8,
-         signature: Data,
-         era: Era,
-         nonce: UInt32,
-         tip: BigUInt,
-         additionalData: Data? = nil) {
+                signatureVersion: UInt8,
+                signature: Data,
+                era: Era,
+                nonce: UInt32,
+                tip: BigUInt,
+                additionalData: Data? = nil,
+                mode: Bool,
+                metadata: RuntimeMetadataProtocol?) {
         self.accountType = accountType
         self.signatureVersion = signatureVersion
         self.signature = signature
@@ -111,6 +114,8 @@ public struct ExtrinsicTransaction: ScaleCodable {
         self.nonce = nonce
         self.tip = tip
         self.additionalData = additionalData
+        self.mode = mode
+        self.metadata = metadata
     }
 
     public init(scaleDecoder: ScaleDecoding) throws {
@@ -137,6 +142,8 @@ public struct ExtrinsicTransaction: ScaleCodable {
 
         tip = try BigUInt(scaleDecoder: scaleDecoder)
         additionalData = try scaleDecoder.readAndConfirm(count: Int(1))
+        mode = try Bool(scaleDecoder: scaleDecoder)
+        metadata = nil
     }
 
     public func encode(scaleEncoder: ScaleEncoding) throws {
@@ -155,8 +162,23 @@ public struct ExtrinsicTransaction: ScaleCodable {
         try era.encode(scaleEncoder: scaleEncoder)
         try BigUInt(nonce).encode(scaleEncoder: scaleEncoder)
         try tip.encode(scaleEncoder: scaleEncoder)
-        if additionalData != nil {
-            scaleEncoder.appendRaw(data: additionalData!)
+        if let metadatav14 = metadata as? RuntimeMetadataV14 {
+            if metadatav14.extrinsic.signedExtensions.contains(where: {$0.identifier == "ChargeAssetTxPayment"}) {
+                if additionalData != nil {
+                    scaleEncoder.appendRaw(data: additionalData!)
+                }
+            }
+            if metadatav14.extrinsic.signedExtensions.contains(where: {$0.identifier == "CheckMetadataHash"}) {
+                try mode.encode(scaleEncoder: scaleEncoder)
+            }
+        }
+        
+        if let metadatav13 = metadata as? RuntimeMetadata {
+            if metadatav13.extrinsic.signedExtensions.contains(where: {$0 == "ChargeAssetTxPayment"}) {
+                if additionalData != nil {
+                    scaleEncoder.appendRaw(data: additionalData!)
+                }
+            }
         }
     }
 }
@@ -167,39 +189,65 @@ public struct ExtrinsicPayload: ScaleEncodable {
     public let nonce: UInt32
     public let tip: BigUInt
     public let additionalData: Data?
+    public let mode: Bool
     public let specVersion: UInt32
     public let transactionVersion: UInt32
     public let genesisHash: Data
     public let blockHash: Data
-    
+    public let metadataHash: Data
+    public let metadata: RuntimeMetadataProtocol
     public func encode(scaleEncoder: ScaleEncoding) throws {
         try call.moduleIndex.encode(scaleEncoder: scaleEncoder)
         try call.callIndex.encode(scaleEncoder: scaleEncoder)
-
         if let arguments = call.arguments {
             scaleEncoder.appendRaw(data: arguments)
         }
-
         try era.encode(scaleEncoder: scaleEncoder)
         try BigUInt(nonce).encode(scaleEncoder: scaleEncoder)
         try tip.encode(scaleEncoder: scaleEncoder)
-        if additionalData != nil {
-            scaleEncoder.appendRaw(data: additionalData!)
+        
+        if let metadatav14 = metadata as? RuntimeMetadataV14 {
+            if metadatav14.extrinsic.signedExtensions.contains(where: {$0.identifier == "CheckMetadataHash"}) {
+                try mode.encode(scaleEncoder: scaleEncoder)
+            }
+            if metadatav14.extrinsic.signedExtensions.contains(where: {$0.identifier == "ChargeAssetTxPayment"}) {
+                if additionalData != nil {
+                    scaleEncoder.appendRaw(data: additionalData!)
+                }
+            }
+            try specVersion.encode(scaleEncoder: scaleEncoder)
+            try transactionVersion.encode(scaleEncoder: scaleEncoder)
+            scaleEncoder.appendRaw(data: genesisHash)
+            scaleEncoder.appendRaw(data: blockHash)
+            if metadatav14.extrinsic.signedExtensions.contains(where: {$0.identifier == "CheckMetadataHash"}) {
+                scaleEncoder.appendRaw(data: metadataHash)
+            }
         }
-        try specVersion.encode(scaleEncoder: scaleEncoder)
-        try transactionVersion.encode(scaleEncoder: scaleEncoder)
-        scaleEncoder.appendRaw(data: genesisHash)
-        scaleEncoder.appendRaw(data: blockHash)
+        
+        if let metadatav13 = metadata as? RuntimeMetadata {
+            if metadatav13.extrinsic.signedExtensions.contains(where: {$0 == "ChargeAssetTxPayment"}) {
+                if additionalData != nil {
+                    scaleEncoder.appendRaw(data: additionalData!)
+                }
+            }
+            try specVersion.encode(scaleEncoder: scaleEncoder)
+            try transactionVersion.encode(scaleEncoder: scaleEncoder)
+            scaleEncoder.appendRaw(data: genesisHash)
+            scaleEncoder.appendRaw(data: blockHash)
+        }
     }
-    public init(call:Call,era:Era,nonce:UInt32,tip:BigUInt,additionalData: Data? = nil,specVersion:UInt32,transactionVersion:UInt32,genesisHash:Data,blockHash:Data){
+    public init(call:Call,era:Era,nonce:UInt32,tip:BigUInt,additionalData: Data? = nil,mode: Bool = false,specVersion:UInt32,transactionVersion:UInt32,genesisHash:Data,blockHash:Data,metadataHash: Data, metadata: RuntimeMetadataProtocol){
         self.call = call
         self.era = era
         self.nonce = nonce
         self.tip = tip
         self.additionalData = additionalData
+        self.mode = mode
         self.specVersion = specVersion
         self.transactionVersion = transactionVersion
         self.genesisHash = genesisHash
         self.blockHash = blockHash
+        self.metadataHash = metadataHash
+        self.metadata = metadata
     }
 }

@@ -11,17 +11,20 @@ public protocol SubstarteExtrinsicFactoryProtocol {
 }
 
 public struct SubstrateExtrinsicParameters {
-    public  let nonce: UInt32
-    public  let genesisHash: Data
-    public  let blockHash: Data
-    public  let specVersion: UInt32
-    public  let transactionVersion: UInt32
-    public  let signatureVersion: UInt8
-    public  let moduleIndex: UInt8
-    public  let callIndex: UInt8
-    public  let tip: BigUInt?
-    public  let additionalData: Data?
-    public init(nonce: UInt32,genesisHash: Data,blockHash: Data,specVersion: UInt32,transactionVersion: UInt32,signatureVersion: UInt8,moduleIndex: UInt8,callIndex: UInt8,tip: BigUInt?,additionalData: Data? = nil){
+    public let nonce: UInt32
+    public let genesisHash: Data
+    public let blockHash: Data
+    public let specVersion: UInt32
+    public let transactionVersion: UInt32
+    public let signatureVersion: UInt8
+    public let moduleIndex: UInt8
+    public let callIndex: UInt8
+    public let tip: BigUInt?
+    public let additionalData: Data?
+    public let mode: Bool
+    public let metadataHash: Data
+    public let runtimeMetadata: RuntimeMetadataProtocol
+    public init(nonce: UInt32,genesisHash: Data,blockHash: Data,specVersion: UInt32,transactionVersion: UInt32,signatureVersion: UInt8,moduleIndex: UInt8,callIndex: UInt8,tip: BigUInt?,additionalData: Data? = nil, mode: Bool, metadataHash: Data, runtimeMetadata: RuntimeMetadataProtocol){
         self.nonce = nonce
         self.genesisHash = genesisHash
         self.blockHash = blockHash
@@ -32,6 +35,9 @@ public struct SubstrateExtrinsicParameters {
         self.callIndex = callIndex
         self.tip = tip
         self.additionalData = additionalData
+        self.mode = mode
+        self.metadataHash = metadataHash
+        self.runtimeMetadata = runtimeMetadata
     }
 }
 
@@ -57,10 +63,13 @@ public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
                                        nonce: additionalParameters.nonce,
                                        tip: tip!,
                                        additionalData: additionalParameters.additionalData,
+                                       mode: additionalParameters.mode,
                                        specVersion: additionalParameters.specVersion,
                                        transactionVersion: additionalParameters.transactionVersion,
                                        genesisHash: additionalParameters.genesisHash,
-                                       blockHash: additionalParameters.blockHash)
+                                       blockHash: additionalParameters.blockHash,
+                                       metadataHash: additionalParameters.metadataHash,
+                                       metadata: additionalParameters.runtimeMetadata)
 
         let payloadEncoder = ScaleEncoder()
         try payload.encode(scaleEncoder: payloadEncoder)
@@ -72,12 +81,14 @@ public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
         let signature = try signer(payloadData)
 
         let transaction = ExtrinsicTransaction(accountType: senderAccountId,
-                                      signatureVersion: additionalParameters.signatureVersion,
-                                      signature: signature,
-                                      era: era,
-                                      nonce: additionalParameters.nonce,
-                                      tip: tip!,
-                                      additionalData: additionalParameters.additionalData)
+                                               signatureVersion: additionalParameters.signatureVersion,
+                                               signature: signature,
+                                               era: era,
+                                               nonce: additionalParameters.nonce,
+                                               tip: tip!,
+                                               additionalData: additionalParameters.additionalData,
+                                               mode: additionalParameters.mode, 
+                                               metadata: additionalParameters.runtimeMetadata)
 
         let extrinsic = ExtrinsicAsset(version: Self.extrinsicVersion,
                                   transaction: transaction,
