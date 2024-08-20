@@ -5,6 +5,7 @@ public protocol RuntimeMetadataProtocol{
     func getCallIndex(in moduleName: String, callName: String) -> UInt8?
     func getModuleNameAndCallName(moduleIndex:UInt8,callIndex:UInt8)->(String,String)?
     func getTypeField(moduleIndex: UInt8, callIndex: UInt8) -> [(String, String)]
+    func getTypeField(moduleName: String, callName: String) -> [(String, String)]
 }
 public struct RuntimeMetadata:RuntimeMetadataProtocol {
     public let metaReserved: UInt32
@@ -65,6 +66,9 @@ public struct RuntimeMetadata:RuntimeMetadataProtocol {
     public func getConstant(in moduleName: String, constantName: String) -> ModuleConstantMetadata? {
         modules.first(where: { $0.name == moduleName })?
             .constants.first(where: { $0.name == constantName})
+    }
+    public func getTypeField(moduleName: String, callName: String) -> [(String, String)] {
+        return []
     }
     
     public func getTypeField(moduleIndex: UInt8, callIndex: UInt8) -> [(String, String)] {
