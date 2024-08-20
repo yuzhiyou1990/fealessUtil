@@ -20,11 +20,11 @@ public struct SubstrateExtrinsicParameters {
     public let moduleIndex: UInt8
     public let callIndex: UInt8
     public let tip: BigUInt?
-    public let additionalData: Data?
+    public let paymentData: Data?
     public let mode: Bool
     public let metadataHash: Data
     public let runtimeMetadata: RuntimeMetadataProtocol
-    public init(nonce: UInt32,genesisHash: Data,blockHash: Data,specVersion: UInt32,transactionVersion: UInt32,signatureVersion: UInt8,moduleIndex: UInt8,callIndex: UInt8,tip: BigUInt?,additionalData: Data? = nil, mode: Bool, metadataHash: Data, runtimeMetadata: RuntimeMetadataProtocol){
+    public init(nonce: UInt32,genesisHash: Data,blockHash: Data,specVersion: UInt32,transactionVersion: UInt32,signatureVersion: UInt8,moduleIndex: UInt8,callIndex: UInt8,tip: BigUInt?,paymentData: Data? = nil, mode: Bool, metadataHash: Data, runtimeMetadata: RuntimeMetadataProtocol){
         self.nonce = nonce
         self.genesisHash = genesisHash
         self.blockHash = blockHash
@@ -34,7 +34,7 @@ public struct SubstrateExtrinsicParameters {
         self.moduleIndex = moduleIndex
         self.callIndex = callIndex
         self.tip = tip
-        self.additionalData = additionalData
+        self.paymentData = paymentData
         self.mode = mode
         self.metadataHash = metadataHash
         self.runtimeMetadata = runtimeMetadata
@@ -62,7 +62,7 @@ public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
                                        era: era,
                                        nonce: additionalParameters.nonce,
                                        tip: tip!,
-                                       additionalData: additionalParameters.additionalData,
+                                       paymentData: additionalParameters.paymentData,
                                        mode: additionalParameters.mode,
                                        specVersion: additionalParameters.specVersion,
                                        transactionVersion: additionalParameters.transactionVersion,
@@ -86,8 +86,8 @@ public struct SubstrateExtrinsicFactory: SubstarteExtrinsicFactoryProtocol {
                                                era: era,
                                                nonce: additionalParameters.nonce,
                                                tip: tip!,
-                                               additionalData: additionalParameters.additionalData,
-                                               mode: additionalParameters.mode, 
+                                               paymentData: additionalParameters.paymentData,
+                                               mode: additionalParameters.mode,
                                                metadata: additionalParameters.runtimeMetadata)
 
         let extrinsic = ExtrinsicAsset(version: Self.extrinsicVersion,

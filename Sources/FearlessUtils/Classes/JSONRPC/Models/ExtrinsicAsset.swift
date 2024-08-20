@@ -95,7 +95,7 @@ public struct ExtrinsicTransaction: ScaleCodable {
     public let era: Era
     public let nonce: UInt32
     public let tip: BigUInt
-    public let additionalData: Data?
+    public let paymentData: Data?
     public let mode: Bool
     public let metadata: RuntimeMetadataProtocol?
     public init(accountType: AccountType,
@@ -104,7 +104,7 @@ public struct ExtrinsicTransaction: ScaleCodable {
                 era: Era,
                 nonce: UInt32,
                 tip: BigUInt,
-                additionalData: Data? = nil,
+                paymentData: Data? = nil,
                 mode: Bool,
                 metadata: RuntimeMetadataProtocol?) {
         self.accountType = accountType
@@ -113,7 +113,7 @@ public struct ExtrinsicTransaction: ScaleCodable {
         self.era = era
         self.nonce = nonce
         self.tip = tip
-        self.additionalData = additionalData
+        self.paymentData = paymentData
         self.mode = mode
         self.metadata = metadata
     }
@@ -141,7 +141,7 @@ public struct ExtrinsicTransaction: ScaleCodable {
         nonce = UInt32(nonceValue)
 
         tip = try BigUInt(scaleDecoder: scaleDecoder)
-        additionalData = try scaleDecoder.readAndConfirm(count: Int(1))
+        paymentData = try scaleDecoder.readAndConfirm(count: Int(1))
         mode = try Bool(scaleDecoder: scaleDecoder)
         metadata = nil
     }
@@ -164,8 +164,8 @@ public struct ExtrinsicTransaction: ScaleCodable {
         try tip.encode(scaleEncoder: scaleEncoder)
         if let metadatav14 = metadata as? RuntimeMetadataV14 {
             if metadatav14.extrinsic.signedExtensions.contains(where: {$0.identifier == "ChargeAssetTxPayment"}) {
-                if additionalData != nil {
-                    scaleEncoder.appendRaw(data: additionalData!)
+                if paymentData != nil {
+                    scaleEncoder.appendRaw(data: paymentData!)
                 }
             }
             if metadatav14.extrinsic.signedExtensions.contains(where: {$0.identifier == "CheckMetadataHash"}) {
@@ -175,8 +175,8 @@ public struct ExtrinsicTransaction: ScaleCodable {
         
         if let metadatav13 = metadata as? RuntimeMetadata {
             if metadatav13.extrinsic.signedExtensions.contains(where: {$0 == "ChargeAssetTxPayment"}) {
-                if additionalData != nil {
-                    scaleEncoder.appendRaw(data: additionalData!)
+                if paymentData != nil {
+                    scaleEncoder.appendRaw(data: paymentData!)
                 }
             }
         }
@@ -188,7 +188,7 @@ public struct ExtrinsicPayload: ScaleEncodable {
     public let era: Era
     public let nonce: UInt32
     public let tip: BigUInt
-    public let additionalData: Data?
+    public let paymentData: Data?
     public let mode: Bool
     public let specVersion: UInt32
     public let transactionVersion: UInt32
@@ -211,8 +211,8 @@ public struct ExtrinsicPayload: ScaleEncodable {
                 try mode.encode(scaleEncoder: scaleEncoder)
             }
             if metadatav14.extrinsic.signedExtensions.contains(where: {$0.identifier == "ChargeAssetTxPayment"}) {
-                if additionalData != nil {
-                    scaleEncoder.appendRaw(data: additionalData!)
+                if paymentData != nil {
+                    scaleEncoder.appendRaw(data: paymentData!)
                 }
             }
             try specVersion.encode(scaleEncoder: scaleEncoder)
@@ -226,8 +226,8 @@ public struct ExtrinsicPayload: ScaleEncodable {
         
         if let metadatav13 = metadata as? RuntimeMetadata {
             if metadatav13.extrinsic.signedExtensions.contains(where: {$0 == "ChargeAssetTxPayment"}) {
-                if additionalData != nil {
-                    scaleEncoder.appendRaw(data: additionalData!)
+                if paymentData != nil {
+                    scaleEncoder.appendRaw(data: paymentData!)
                 }
             }
             try specVersion.encode(scaleEncoder: scaleEncoder)
@@ -236,12 +236,12 @@ public struct ExtrinsicPayload: ScaleEncodable {
             scaleEncoder.appendRaw(data: blockHash)
         }
     }
-    public init(call:Call,era:Era,nonce:UInt32,tip:BigUInt,additionalData: Data? = nil,mode: Bool = false,specVersion:UInt32,transactionVersion:UInt32,genesisHash:Data,blockHash:Data,metadataHash: Data, metadata: RuntimeMetadataProtocol){
+    public init(call:Call,era:Era,nonce:UInt32,tip:BigUInt,paymentData: Data? = nil,mode: Bool = false,specVersion:UInt32,transactionVersion:UInt32,genesisHash:Data,blockHash:Data,metadataHash: Data, metadata: RuntimeMetadataProtocol){
         self.call = call
         self.era = era
         self.nonce = nonce
         self.tip = tip
-        self.additionalData = additionalData
+        self.paymentData = paymentData
         self.mode = mode
         self.specVersion = specVersion
         self.transactionVersion = transactionVersion
