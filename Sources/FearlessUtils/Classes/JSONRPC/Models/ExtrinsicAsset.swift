@@ -207,13 +207,13 @@ public struct ExtrinsicPayload: ScaleEncodable {
         try tip.encode(scaleEncoder: scaleEncoder)
         
         if let metadatav14 = metadata as? RuntimeMetadataV14 {
-            if metadatav14.extrinsic.signedExtensions.contains(where: {$0.identifier == "CheckMetadataHash"}) {
-                try mode.encode(scaleEncoder: scaleEncoder)
-            }
             if metadatav14.extrinsic.signedExtensions.contains(where: {$0.identifier == "ChargeAssetTxPayment"}) {
                 if paymentData != nil {
                     scaleEncoder.appendRaw(data: paymentData!)
                 }
+            }
+            if metadatav14.extrinsic.signedExtensions.contains(where: {$0.identifier == "CheckMetadataHash"}) {
+                try mode.encode(scaleEncoder: scaleEncoder)
             }
             try specVersion.encode(scaleEncoder: scaleEncoder)
             try transactionVersion.encode(scaleEncoder: scaleEncoder)
