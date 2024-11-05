@@ -1,6 +1,6 @@
 import Foundation
 import TweetNacl
-import SubstrateScrypt
+import CryptoSwift
 
 public class KeystoreExtractor: KeystoreExtracting {
     public init() {}
@@ -34,20 +34,14 @@ public class KeystoreExtractor: KeystoreExtracting {
             } else {
                 scryptData = Data()
             }
-            let encryptionKey = try IRScryptKeyDeriviation()
-                .deriveKey(from: scryptData,
-                           salt: scryptParameters.salt,
-                           scryptN: UInt(scryptParameters.scryptN),
-                           scryptP: UInt(scryptParameters.scryptP),
-                           scryptR: UInt(scryptParameters.scryptR),
-                           length: UInt(KeystoreConstants.encryptionKeyLength))
+            let derivedArray = try Scrypt(password: scryptData.bytes, salt: scryptParameters.salt.bytes, dkLen: KeystoreConstants.encryptionKeyLength, N: Int(scryptParameters.scryptN), r: Int(scryptParameters.scryptN), p: Int(scryptParameters.scryptN)).calculate()
             
             let nonceStart = ScryptParameters.encodedLength
             let nonceEnd = ScryptParameters.encodedLength + KeystoreConstants.nonceLength
             let nonce = Data(data[nonceStart..<nonceEnd])
             let encryptedData = Data(data[nonceEnd...])
 
-            encodedData = try NaclSecretBox.open(box: encryptedData, nonce: nonce, key: encryptionKey)
+            encodedData = try NaclSecretBox.open(box: encryptedData, nonce: nonce, key: Data(derivedArray))
         } else {
             throw KeystoreExtractorError.unsupportedEncoding
         }
