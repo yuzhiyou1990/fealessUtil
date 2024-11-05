@@ -37,7 +37,7 @@ extension KeystoreBuilder: KeystoreBuilding {
         } else {
             scryptData = Data()
         }
-        let derivedArray = try Scrypt(password: scryptData.bytes, salt: scryptParameters.salt.bytes, dkLen: KeystoreConstants.encryptionKeyLength, N: Int(scryptParameters.scryptN), r: Int(scryptParameters.scryptN), p: Int(scryptParameters.scryptN)).calculate()
+        let derivedArray = try Scrypt(password: scryptData.bytes, salt: scryptParameters.salt.bytes, dkLen: KeystoreConstants.encryptionKeyLength, N: Int(scryptParameters.scryptN), r: Int(scryptParameters.scryptR), p: Int(scryptParameters.scryptP)).calculate()
         
         let nonce = try Data.gerateRandomBytes(of: KeystoreConstants.nonceLength)
 

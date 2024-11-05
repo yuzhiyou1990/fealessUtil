@@ -34,7 +34,7 @@ public class KeystoreExtractor: KeystoreExtracting {
             } else {
                 scryptData = Data()
             }
-            let derivedArray = try Scrypt(password: scryptData.bytes, salt: scryptParameters.salt.bytes, dkLen: KeystoreConstants.encryptionKeyLength, N: Int(scryptParameters.scryptN), r: Int(scryptParameters.scryptN), p: Int(scryptParameters.scryptN)).calculate()
+            let derivedArray = try Scrypt(password: scryptData.bytes, salt: scryptParameters.salt.bytes, dkLen: KeystoreConstants.encryptionKeyLength, N: Int(scryptParameters.scryptN), r: Int(scryptParameters.scryptR), p: Int(scryptParameters.scryptP)).calculate()
             
             let nonceStart = ScryptParameters.encodedLength
             let nonceEnd = ScryptParameters.encodedLength + KeystoreConstants.nonceLength
